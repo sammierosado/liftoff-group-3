@@ -22,33 +22,6 @@ public class HomeController {
     public String viewHomePage() {
         return "index";
     }
-    @GetMapping("login")
-    public String viewLoginPage() {
-        return "login";
-    }
-    @GetMapping("/register")
-    public String viewRegisterPage() {
-        return "register";
-    }
-    @PostMapping("/createUser")
-    public String createUser(@ModelAttribute User user, HttpSession session){
-        System.out.println(user.getEmail());
-        boolean exist = userService.checkEmail(user.getEmail());
-        System.out.println("!!!!!!"+exist);
-        if(exist){
-            session.setAttribute("msg","Email id already exist!");
-            return "redirect:/register";
-        }else{
-            System.out.println("create user");
-            User newUser = userService.createUser(user);
-            if(newUser!=null){
-                session.setAttribute("msg","Register Successfully");
-                return "redirect:/";
-            }else{
-                session.setAttribute("msg","Error in user register");
-                return "redirect:/register";
-            }
-        }
 
-    }
+
 }

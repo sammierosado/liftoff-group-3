@@ -1,45 +1,42 @@
-//package brainyBunch.liftoffgroup3.controller;
-//
-//import brainyBunch.liftoffgroup3.model.User;
-//import brainyBunch.liftoffgroup3.model.dto.RegisterFormDTO;
-//import brainyBunch.liftoffgroup3.model.repository.UserRepository;
-//import jakarta.servlet.http.HttpServletRequest;
-//import jakarta.validation.Valid;
-//import org.springframework.beans.factory.annotation.Autowired;
-////import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-//import org.springframework.stereotype.Controller;
-//import org.springframework.ui.Model;
-//import org.springframework.web.bind.annotation.GetMapping;
-//import org.springframework.web.bind.annotation.PostMapping;
-//
-//@Controller
-//public class RegisterController {
-//
-//    @Autowired
-//    UserRepository userRepository;
-//
-//    @GetMapping("/register")
-//    public String viewRegistrationForm(Model model) {
-//        User user = new User();
-//        model.addAttribute("user", user);
-//        return "register";
-//    }
-//
-//    @PostMapping("/processRegister")
-//    public String processRegistrationForm(User user) {
-//
-//        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-//        String encodedPassword = passwordEncoder.encode(user.getPassword());
-//        user.setPassword(encodedPassword);
-//        userRepository.save(user);
-//        return "registerSuccess";
-//    }
-//
-//    @GetMapping("/registerSuccess")
-//    public String registerSuccess(Model model) {
-//        User user = new User();
-//        model.addAttribute("user", user);
-//        return "index";
-//    }
-//
-//}
+package brainyBunch.liftoffgroup3.controllers;
+
+import brainyBunch.liftoffgroup3.model.User;
+import brainyBunch.liftoffgroup3.services.UserService;
+import jakarta.servlet.http.HttpSession;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+
+@Controller
+public class RegisterController {
+
+    @Autowired
+    UserService userService;
+    @GetMapping("/register")
+    public String viewRegisterPage() {
+        return "register";
+    }
+    @PostMapping("/createUser")
+    public String createUser(@ModelAttribute User user, HttpSession session){
+        System.out.println(user.getEmail());
+        boolean exist = userService.checkEmail(user.getEmail());
+        System.out.println("!!!!!!"+exist);
+        if(exist){
+            session.setAttribute("msg","Email id already exist!");
+            return "redirect:/register";
+        }else{
+            System.out.println("create user");
+            User newUser = userService.createUser(user);
+            if(newUser!=null){
+                session.setAttribute("msg","Register Successfully");
+                return "redirect:/";
+            }else{
+                session.setAttribute("msg","Error in user register");
+                return "redirect:/register";
+            }
+        }
+
+    }
+}
