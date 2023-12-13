@@ -1,18 +1,20 @@
-import logo from './logo.svg';
-import './App.css';
+import logo from "./logo.svg";
+import "./App.css";
+import React from "react";
 
-
-import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import RandomMusicPage from "./components/RandomMusicPage";
 
 function App() {
   return (
-    <div>
-      <h1>Spotify Music App</h1>
-      <p>This is the homepage for the spotify music application.</p>
-    </div>
+    <Router>
+      <div>
+        <Routes>
+          <Route path="/RandomMusic" element={<RandomMusicPage />} />
+        </Routes>
+      </div>
+    </Router>
   );
 }
-
-
 
 export default App;
