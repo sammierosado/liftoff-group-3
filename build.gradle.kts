@@ -22,11 +22,6 @@ dependencies {
 	implementation ("org.springframework.boot:spring-boot-starter-validation")
 	implementation ("org.springframework.boot:spring-boot-starter-web")
 	implementation ("org.springframework.boot:spring-boot-starter-thymeleaf")
-//	implementation ("se.michaelthelin.spotify:spotify-web-api-java")
-
-	implementation ("org.springframework.boot:spring-boot-starter-security")
-	testImplementation ("org.springframework.security:spring-security-test")
-	implementation("org.springframework.security:spring-security-crypto:5.5.1")
 	runtimeOnly ("com.mysql:mysql-connector-j")
 }
 
