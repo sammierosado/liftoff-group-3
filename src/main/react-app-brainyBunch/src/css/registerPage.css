@@ -1,0 +1,21 @@
+.register .register-form {
+  width: 300px;
+ }
+
+.register .register-form .form-group {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+.register .register-form .form-group label {
+  font-weight: 600 ;
+}
+
+.register .register-form .register_btn {
+  margin-left: 8.5rem;
+  width: 165px;
+  border-radius: 10px;
+  background-color: black;
+  color: white;
+  border: none;
+}

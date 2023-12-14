@@ -5,6 +5,8 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import HomePage from "./components/HomePage";
 import LikedSongs from "./components/LikedSongs";
+import Login from "./components/Login";
+import Register from "./components/Register";
 
 
 
@@ -15,7 +17,9 @@ function App() {
         <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/likedsongs" element={<LikedSongs />} />
-        </Routes>
+            <Route path="/register" element={<Register />} />
+            <Route path="/login" element={<Login />} />
+          </Routes>
       </div>
     </Router>
   );

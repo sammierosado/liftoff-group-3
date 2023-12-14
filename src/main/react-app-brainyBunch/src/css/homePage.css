@@ -1,0 +1,9 @@
+.homePage .nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.homePage .nav .nav_routes {
+  margin-right: 2rem;
+}
