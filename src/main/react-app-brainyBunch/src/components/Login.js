@@ -2,13 +2,13 @@ import React, { useState } from "react";
 import "../css/loginPage.css";
 
 function Login() {
-  const [email, setEmail] = useState(null);
+  const [username, setUsername] = useState(null);
   const [password, setPassword] = useState(null);
 
   const handleInputChange = (e) => {
     const { id, value } = e.target;
-    if (id === "email") {
-      setEmail(value);
+    if (id === "username") {
+      setUsername(value);
     }
     if (id === "password") {
       setPassword(value);
@@ -16,27 +16,42 @@ function Login() {
   };
 
   const handleSubmit = () => {
-    console.log(email, password);
+    console.log(username, password);
+  };
+
+  const loginUser = async (e) => {
+    e.preventDefault();
+    const response = await fetch("http://localhost:8080/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(username,password),
+    })
+      .then((response) => {
+        document.location.href="/"; 
+      })
+      .catch((error) => {
+        alert(error);
+      });
   };
 
   return (
     <div className="login">
       <div className="login-form">
         <h1>User Login</h1>
-        <div className="email form-group">
-          <label for="email">Email </label>
+        <div className="username form-group">
+          <label for="username">Username </label>
           <input
             type="text"
-            value={email}
+            value={username}
             onChange={(e) => handleInputChange(e)}
-            id="email"
-            placeholder="Email"
+            id="username"
+            placeholder="username"
           />
         </div>
         <div className="password form-group">
           <label for="password">Password </label>
           <input
-            type="text"
+            type="password"
             value={password}
             onChange={(e) => handleInputChange(e)}
             id="password"
@@ -44,7 +59,7 @@ function Login() {
           />
         </div>
         <div className="footer">
-          <button type="submit" className="login_btn">
+          <button onClick={loginUser} type="submit" className="login_btn">
             Login
           </button>
         </div>

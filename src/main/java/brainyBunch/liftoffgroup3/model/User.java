@@ -23,7 +23,6 @@ public class User {
     @Email private String email;
     @NotBlank
     private String password;
-
     public Long getId() {
         return id;
     }
