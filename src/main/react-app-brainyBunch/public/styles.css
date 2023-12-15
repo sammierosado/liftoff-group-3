@@ -1,0 +1,7 @@
+.time-display {
+    display: block;
+  }
+  
+  button:active + .time-display {
+    display: none;
+  }
