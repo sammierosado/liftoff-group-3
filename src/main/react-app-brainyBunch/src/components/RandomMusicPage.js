@@ -69,7 +69,7 @@ function RandomMusicPage() {
         </button>
       </div>
       <div>
-        {albums.map((album, i) => (
+         {albums.map((album, i) => (
           <div className="RandomCard" key={i}>
             <img src={album.images[0].url} alt="alt text" />
             <div className="container">
@@ -79,6 +79,13 @@ function RandomMusicPage() {
               <p>{album.artists[0].name}</p>
               <button onClick={() => handleLike(i)}>
                 {album.liked ? "Unlike" : "Like"}
+              </button>
+              <button
+                className="CollectionButton"
+                type="button"
+                onClick={() => console.log("clicked!")}
+              >
+                Add to collection
               </button>
             </div>
           </div>
