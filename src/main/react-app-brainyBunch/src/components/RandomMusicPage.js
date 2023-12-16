@@ -57,6 +57,13 @@ function RandomMusicPage() {
                   <b>{album.name}</b>
                 </h4>
                 <p>{album.artists[0].name}</p>
+                <button
+                  className="CollectionButton"
+                  type="button"
+                  onClick={() => console.log("clicked!")}
+                >
+                  Add to collection
+                </button>
               </div>
             </div>
           );
