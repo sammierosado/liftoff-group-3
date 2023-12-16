@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import UserService from "../services/UserService";
-import axios from "axios";
+// import UserService from "../services/UserService";
+// import axios from "axios";
 import "../css/registerPage.css";
 
 function Register() {
