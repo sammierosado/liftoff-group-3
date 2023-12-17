@@ -31,7 +31,6 @@ function Login() {
       });
 
       const data = await response.json();
-      alert(JSON.stringify(data));
       if (response.ok) {
         document.location.href = "/user";
       } else {
