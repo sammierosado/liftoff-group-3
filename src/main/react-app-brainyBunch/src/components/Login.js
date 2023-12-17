@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "../css/loginPage.css";
+import { json } from "react-router";
 
 function Login() {
   const [username, setUsername] = useState(null);
@@ -20,18 +21,25 @@ function Login() {
   };
 
   const loginUser = async (e) => {
-    e.preventDefault();
-    const response = await fetch("http://localhost:8080/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(username,password),
-    })
-      .then((response) => {
-        document.location.href="/"; 
-      })
-      .catch((error) => {
-        alert(error);
+    try {
+      e.preventDefault();
+      let loginUser = { username: username, password: password };
+      const response = await fetch("http://localhost:8080/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(loginUser),
       });
+
+      const data = await response.json();
+      alert(JSON.stringify(data));
+      if (response.ok) {
+        document.location.href = "/user";
+      } else {
+        alert("Login Failed");
+      }
+    } catch (error) {
+      alert(error);
+    }
   };
 
   return (

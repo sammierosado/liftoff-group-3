@@ -7,6 +7,7 @@ import HomePage from "./components/HomePage";
 import LikedSongs from "./components/LikedSongs";
 import Login from "./components/Login";
 import Register from "./components/Register";
+import UserProfile from "./components/UserProfile";
 import RandomMusicPage from "./components/RandomMusicPage";
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
           <Route path="/likedsongs" element={<LikedSongs />} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/user" element={<UserProfile />} />
           <Route path="/randompage" element={<RandomMusicPage />} />
         </Routes>
       </div>
