@@ -5,11 +5,10 @@ import brainyBunch.liftoffgroup3.services.UserService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
-@Controller
+@CrossOrigin(origins = "*")
+@RestController
 public class RegisterController {
 
     @Autowired
@@ -18,23 +17,18 @@ public class RegisterController {
     public String viewRegisterPage() {
         return "register";
     }
-    @PostMapping("/createUser")
-    public String createUser(@ModelAttribute User user, HttpSession session){
-        System.out.println(user.getEmail());
+    @PostMapping("/register")
+    public String createUser(@RequestBody User user) throws Exception {
         boolean exist = userService.checkEmail(user.getEmail());
-        System.out.println("!!!!!!"+exist);
         if(exist){
-            session.setAttribute("msg","Email id already exist!");
-            return "redirect:/register";
+            throw new Exception("User already exist");
         }else{
             System.out.println("create user");
             User newUser = userService.createUser(user);
             if(newUser!=null){
-                session.setAttribute("msg","Register Successfully");
-                return "redirect:/";
+                return "User registered successfully";
             }else{
-                session.setAttribute("msg","Error in user register");
-                return "redirect:/register";
+                throw new Exception("User details not valid!");
             }
         }
 
