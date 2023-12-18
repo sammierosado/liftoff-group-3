@@ -19,7 +19,6 @@ public class RegisterController {
     }
     @PostMapping("/register")
     public String createUser(@RequestBody User user) throws Exception {
-        System.out.println(user.getEmail());
         boolean exist = userService.checkEmail(user.getEmail());
         if(exist){
             throw new Exception("User already exist");
