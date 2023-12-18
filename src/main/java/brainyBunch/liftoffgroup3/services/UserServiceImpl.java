@@ -5,6 +5,7 @@ import brainyBunch.liftoffgroup3.model.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
@@ -14,6 +15,7 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public User createUser(User user) {
+       user.setLastLoggedIn(LocalDateTime.now().toString());
        return userRepository.save(user);
     }
     @Override
@@ -23,5 +25,17 @@ public class UserServiceImpl implements UserService{
              return true;
          }
          return false;
+    }
+    @Override
+    public User isPasswordMatch(String username, String password){
+        Optional<User> user = userRepository.findByUsername(username);
+        if(user.isPresent()){
+            User loggedInUser  = user.get();
+            loggedInUser.setLastLoggedIn(LocalDateTime.now().toString());
+            userRepository.save(loggedInUser);
+            return loggedInUser;
+        }else{
+            return null;
+        }
     }
 }

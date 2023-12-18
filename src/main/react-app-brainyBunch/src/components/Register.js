@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 
-// import UserService from "../services/UserService";
-// import axios from "axios";
 
+import axios from "axios";
 import "../css/registerPage.css";
+import { json, redirect } from "react-router-dom";
 
 function Register() {
   const [user, setUser] = useState({
-    id: "",
     username: "",
+    pronoun: "",
     email: "",
     password: "",
   });
@@ -30,24 +30,20 @@ function Register() {
     setUser(updatedUser);
   };
 
-  // const saveUser = async () => {
-  //   try {
-  //     const addedUser = await axios.post(
-  //       "http://localhost:8080/register",
-  //       user
-  //     );
-  //   } catch (error) {
-  //     console.log("User unable to register" + error);
-  //   }
-  //    e.preventDefault();
-  //     UserService.saveUser(user)
-  //       .then((response) => {
-  //         console.log(response);
-  //       })
-  //       .catch((error) => {
-  //         console.log(error);
-  //       });
-  // };
+  const saveUser = async (e) => {
+    e.preventDefault();
+    const response = await fetch("http://localhost:8080/register", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(user),
+    })
+      .then((response) => {
+        document.location.href="/"; 
+      })
+      .catch((error) => {
+        alert(error);
+      });
+  };
   console.log(user);
   return (
     <div className="register">
@@ -95,7 +91,7 @@ function Register() {
             />
           </div>
           <div className="footer">
-            <button type="submit" className="register_btn">
+            <button onClick={saveUser} type="submit" className="register_btn">
               Register
             </button>
           </div>

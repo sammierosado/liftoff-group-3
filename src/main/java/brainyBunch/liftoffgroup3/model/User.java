@@ -1,5 +1,4 @@
 package brainyBunch.liftoffgroup3.model;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -23,7 +22,8 @@ public class User {
     @Email private String email;
     @NotBlank
     private String password;
-
+    @NotBlank
+    private String lastLoggedIn;
     public Long getId() {
         return id;
     }
@@ -63,11 +63,21 @@ public class User {
         this.email = email;
     }
 
-    public User(String username, String pronoun, String password, String email) {
+    public String getLastLoggedIn() {
+        return lastLoggedIn;
+    }
+
+    public void setLastLoggedIn(String lastLoggedIn) {
+        this.lastLoggedIn = lastLoggedIn;
+    }
+
+    public User(Long id, String username, String pronoun, String email, String password, String lastLoggedIn) {
+        this.id = id;
         this.username = username;
         this.pronoun = pronoun;
-        this.password = password;
         this.email = email;
+        this.password = password;
+        this.lastLoggedIn = lastLoggedIn;
     }
     public User() {
     }
