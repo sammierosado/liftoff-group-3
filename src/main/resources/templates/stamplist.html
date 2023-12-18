@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/"
+      th:replace="base::Layout(~{::section})">
+<head>
+    <meta charset="UTF-8">
+    <title>All Timestamps</title>
+</head>
+<body>
+<section>
+<h1>All Timestamps</h1>
+<form action="templates/stamplist.html" method="post">
+    <button type="submit">Save Timestamps</button>
+</form>
+<table>
+    <thead>
+    <tr>
+        <th>Timestamp</th>
+        <th>Action (optional)</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="stamp : ${allStamps}">
+        <td><span th:text="${stamp.getStampTime()}"></span></td>
+        <td th:if="${stamp.action != null}">th:text="${stamp.action}"</td>
+    </tr>
+    </tbody>
+</table>
+</section>
+</body>
+</html>

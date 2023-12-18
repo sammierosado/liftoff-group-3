@@ -23,6 +23,9 @@ dependencies {
 	implementation ("org.springframework.boot:spring-boot-starter-web")
 	implementation ("org.springframework.boot:spring-boot-starter-thymeleaf")
 	runtimeOnly ("com.mysql:mysql-connector-j")
+	//Robert: Added additional implementation "mysql:mysql-connector-java:8.0.32" for database connectivity.
+	//if it causes issues, please delete.
+	implementation ("mysql:mysql-connector-java:8.0.32")
 }
 
 tasks.withType<Test> {
