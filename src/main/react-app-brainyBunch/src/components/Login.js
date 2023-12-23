@@ -5,6 +5,7 @@ import { json } from "react-router";
 function Login() {
   const [username, setUsername] = useState(null);
   const [password, setPassword] = useState(null);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleInputChange = (e) => {
     const { id, value } = e.target;
@@ -31,12 +32,15 @@ function Login() {
       });
 
       const data = await response.json();
+      console.log(data.errorMessage);
       if (response.ok) {
+        localStorage.setItem("username", username);
         document.location.href = "/user";
       } else {
-        alert("Login Failed");
+        setErrorMessage(data.errorMessage);
       }
     } catch (error) {
+      setErrorMessage(error.response.data.message);
       alert(error);
     }
   };
@@ -45,6 +49,7 @@ function Login() {
     <div className="login">
       <div className="login-form">
         <h1>User Login</h1>
+        {errorMessage && <p className="error">{errorMessage}</p>}
         <div className="username form-group">
           <label for="username">Username </label>
           <input
