@@ -30,7 +30,7 @@ function Login() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(loginUser),
       });
-
+      //fetchimg data from API
       const data = await response.json();
       console.log(data.errorMessage);
       if (response.ok) {
