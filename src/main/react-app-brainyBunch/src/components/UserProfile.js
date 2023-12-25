@@ -6,6 +6,22 @@ function UserProfile() {
   const [isLoading, setIsLoading] = useState(true);
   const username = localStorage.getItem("username");
 
+  const uploadedImage = React.useRef(null);
+  const imageUploader = React.useRef(null);
+
+  const handleImageUpload = (e) => {
+    const [file] = e.target.files;
+    if (file) {
+      const reader = new FileReader();
+      const { current } = uploadedImage;
+      current.file = file;
+      reader.onload = (e) => {
+        current.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   useEffect(() => {
     const userProfile = async () => {
       const response = await fetch(
@@ -35,16 +51,41 @@ function UserProfile() {
   });
 
   return (
-    <div className="userProfile">
-      <h2>Welcome! {username}</h2>
-      <div className="nav">
-        <span className="nav_routes">
-          <Link to={`/${username}/editProfile`}>Edit User Profile</Link>
-          &nbsp;&nbsp;
-          <Link to="/userCollection">User Collection</Link>
-          &nbsp;&nbsp;
-          <Link to="/searchMusic">Find Music</Link>
-        </span>
+    <div>
+      <div className="userProfile-nav">
+        <h2>Welcome! {username}</h2>
+        <div>
+          <div>
+            <Link to={`/${username}/editProfile`}>Edit</Link>
+            &nbsp;&nbsp;
+            <Link to="/userCollection">User Collection</Link>
+            &nbsp;&nbsp;
+            <Link to="/searchMusic">Find Music</Link>
+          </div>
+        </div>
+      </div>
+     
+      <div>
+        <table>
+          <thead>
+          <tr>
+              <th>User Profile</th>
+            </tr>
+          <tr>
+              <td>Username</td>
+            </tr>
+            <tr>
+              <td>email</td>
+            </tr>
+            <tr>
+              <td>pronoun</td>
+            </tr>
+            <tr>
+              {/* <td>{data.email}</td> */}
+              {/* <td>{data.pronoun}</td> */}
+            </tr>
+          </thead>
+        </table>
       </div>
     </div>
   );

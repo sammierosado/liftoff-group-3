@@ -35,7 +35,7 @@ function Login() {
       console.log(data.errorMessage);
       if (response.ok) {
         localStorage.setItem("username", username);
-        document.location.href = "/user";
+        document.location.href = "/";
       } else {
         setErrorMessage(data.errorMessage);
       }

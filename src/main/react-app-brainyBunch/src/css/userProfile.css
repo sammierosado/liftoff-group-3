@@ -1,9 +1,6 @@
-.userProfile .nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .userProfile .nav .nav_routes {
-    margin-right: 2rem;
-  }
+.userProfile-nav {
+  padding: 0rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
