@@ -6,20 +6,11 @@ function UserProfile() {
   const [isLoading, setIsLoading] = useState(true);
   const username = localStorage.getItem("username");
 
-  const uploadedImage = React.useRef(null);
-  const imageUploader = React.useRef(null);
+  const [file, setFile] = useState();
 
   const handleImageUpload = (e) => {
-    const [file] = e.target.files;
-    if (file) {
-      const reader = new FileReader();
-      const { current } = uploadedImage;
-      current.file = file;
-      reader.onload = (e) => {
-        current.src = e.target.result;
-      };
-      reader.readAsDataURL(file);
-    }
+    console.log(e.target.files);
+    setFile(URL.createObjectURL(e.target.files[0]));
   };
 
   useEffect(() => {
@@ -64,7 +55,11 @@ function UserProfile() {
           </div>
         </div>
       </div>
-     
+      <div>
+            <h4>Upload Image:</h4>
+            <input type="file" onChange={handleImageUpload} />
+            <img src={file} />
+        </div>
       <div>
         <table>
           <thead>
@@ -81,8 +76,8 @@ function UserProfile() {
               <td>pronoun</td>
             </tr>
             <tr>
-              {/* <td>{data.email}</td> */}
-              {/* <td>{data.pronoun}</td> */}
+              {/* <td>{data.email}</td>
+              <td>{data.pronoun}</td> */}
             </tr>
           </thead>
         </table>

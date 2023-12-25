@@ -1,6 +1,6 @@
 .register .register-form {
   width: 300px;
- }
+}
 
 .register .register-form .form-group {
   display: flex;
@@ -8,7 +8,12 @@
   margin-bottom: 0.5rem;
 }
 .register .register-form .form-group label {
-  font-weight: 600 ;
+  font-weight: 600;
+}
+
+.register .register-form .form-group .select {
+  font-size: 14px;
+  width: 55%;
 }
 
 .register .register-form .register_btn {

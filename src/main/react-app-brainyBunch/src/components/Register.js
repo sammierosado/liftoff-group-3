@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 
-
 import axios from "axios";
 import "../css/registerPage.css";
 import { json, redirect } from "react-router-dom";
@@ -12,6 +11,8 @@ function Register() {
     email: "",
     password: "",
   });
+  const [errorMessage, setErrorMessage] = useState("");
+  const [selectOption, setSelectOption] = useState("");
 
   const handleChange = (field, value) => {
     let updatedUser = { ...user };
@@ -19,6 +20,7 @@ function Register() {
       updatedUser.username = value;
     }
     if (field === "pronoun") {
+      setSelectOption(field.value);
       updatedUser.pronoun = value;
     }
     if (field === "email") {
@@ -32,23 +34,42 @@ function Register() {
 
   const saveUser = async (e) => {
     e.preventDefault();
-    const response = await fetch("http://localhost:8080/register", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(user),
-    })
-      .then((response) => {
-        document.location.href="/"; 
-      })
-      .catch((error) => {
-        alert(error);
+    // const response = await fetch("http://localhost:8080/register", {
+    //   method: "POST",
+    //   headers: { "Content-Type": "application/json" },
+    //   body: JSON.stringify(user),
+    // })
+    //   .then((response) => {
+    //     document.location.href="/";
+    //   })
+    //   .catch((error) => {
+    //     alert(error);
+    //   });
+
+    try {
+      const response = await fetch("http://localhost:8080/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(user),
       });
+      const data = await response.json();
+      console.log(data.errorMessage);
+      if (response.ok) {
+        document.location.href = "/";
+      } else {
+        setErrorMessage(data.errorMessage);
+      }
+    } catch (error) {
+      setErrorMessage(error.response.data.message);
+      alert(error);
+    }
   };
   console.log(user);
   return (
     <div className="register">
       <div>
         <h1>User Registration</h1>
+        {errorMessage && <p className="error">{errorMessage}</p>}
         <div className="register-form">
           <div className="username form-group">
             <label for="username">Username </label>
@@ -62,13 +83,18 @@ function Register() {
           </div>
           <div className="pronoun form-group">
             <label for="pronoun">Pronoun </label>
-            <input
-              type="text"
+            <select
+              className="select"
               value={user.pronoun}
               onChange={(e) => handleChange("pronoun", e.target.value)}
               id="pronoun"
               placeholder="Pronoun"
-            />
+            >
+              <option value="">Select</option>
+              <option value="he">He/His</option>
+              <option value="she">She/Her</option>
+              <option value="they">They/Them</option>
+            </select>
           </div>
           <div className="email form-group">
             <label for="email">Email </label>
