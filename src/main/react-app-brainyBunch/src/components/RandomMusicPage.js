@@ -1,7 +1,8 @@
-// RandomMusicPage.js
+
 import React, { useEffect, useState } from "react";
-import { Link, Route, Routes } from "react-router-dom";
+import { Routes, Route, Link } from "react-router-dom";
 import LikedSongsPage from "./LikedSongsPage";
+import CollectionPage from "./CollectionPage"; // Import CollectionPage
 import "../css/randomPage.css";
 
 const CLIENT_ID = "2c8d20f72c914fe79dfd499fb8f9644e";
@@ -11,6 +12,7 @@ function RandomMusicPage() {
   const [accessToken, setAccessToken] = useState("");
   const [albums, setAlbums] = useState([]);
   const [likedAlbums, setLikedAlbums] = useState([]);
+  const [selectedAlbum, setSelectedAlbum] = useState(null);
 
   useEffect(() => {
     var authParameters = {
@@ -61,6 +63,15 @@ function RandomMusicPage() {
     }
   };
 
+  const handleAddToCollection = () => {
+    if (selectedAlbum) {
+      // Add the selected album to the user's collection
+      console.log("Added to collection:", selectedAlbum);
+      // Clear the selected album
+      setSelectedAlbum(null);
+    }
+  };
+
   return (
     <div className="RandomMusicPage">
       <div>
@@ -69,7 +80,7 @@ function RandomMusicPage() {
         </button>
       </div>
       <div>
-         {albums.map((album, i) => (
+        {albums.map((album, i) => (
           <div className="RandomCard" key={i}>
             <img src={album.images[0].url} alt="alt text" />
             <div className="container">
@@ -83,7 +94,7 @@ function RandomMusicPage() {
               <button
                 className="CollectionButton"
                 type="button"
-                onClick={() => console.log("clicked!")}
+                onClick={() => setSelectedAlbum(album)}
               >
                 Add to collection
               </button>
@@ -92,12 +103,18 @@ function RandomMusicPage() {
         ))}
       </div>
       <div>
+        {/* Uncomment this link when you have a LikedSongsPage component */}
         {/* <Link to="/likedsongs">Go to Liked Songs</Link> */}
       </div>
       <Routes>
         <Route
           path="/likedsongs"
           element={<LikedSongsPage likedAlbums={likedAlbums} />}
+        />
+        {/* Pass onAddSong callback to CollectionPage */}
+        <Route
+          path="/collections"
+          element={<CollectionPage onAddSong={handleAddToCollection} />}
         />
       </Routes>
     </div>
