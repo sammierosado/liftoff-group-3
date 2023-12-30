@@ -1,28 +1,54 @@
-import React from 'react';
+import React from "react";
+import { Form, redirect } from "react-router-dom";
+import classes from "../css/navigation.css";
 
-import classes from '../css/navigation.css';
+const Navigation = () => {
+  const isLoggedIn = localStorage.getItem("username");
 
-const Navigation = (props) => {
+  const handleLogout = () => {
+    localStorage.removeItem("username");
+    window.location.href = "/";
+  };
   return (
-    <nav className={classes.nav}>
-      <ul>
-        {props.isLoggedIn && (
-          <li>
-            <a href="/">Collection</a>
-          </li>
-        )}
-        {props.isLoggedIn && (
-          <li>
-            <a href="/">Profile</a>
-          </li>
-        )}
-        {props.isLoggedIn && (
-          <li>
-            <button onClick={props.onLogout}>Logout</button>
-          </li>
-        )}
-      </ul>
-    </nav>
+    <header className="main-header">
+      <h1>Spotify Music Organizer</h1>
+      <nav className="nav">
+        <ul>
+          {!isLoggedIn && (
+            <li>
+              <a href="/register">Register</a>
+            </li>
+          )}
+          {!isLoggedIn && (
+            <li>
+              <a href="/login">Login</a>
+            </li>
+          )}
+          {isLoggedIn && (
+            <li>
+              <a href="/collection">Collection</a>
+            </li>
+          )}
+          {isLoggedIn && (
+            <li>
+              <a href="/user">Profile</a>
+            </li>
+          )}
+          {isLoggedIn && (
+            <li>
+              <a href="/search">Find Music</a>
+            </li>
+          )}
+          {isLoggedIn && (
+            <li>
+              {/* <Form action="/logout" method="post"> */}
+              <button onClick={handleLogout}>Logout</button>
+              {/* </Form> */}
+            </li>
+          )}
+        </ul>
+      </nav>
+    </header>
   );
 };
 

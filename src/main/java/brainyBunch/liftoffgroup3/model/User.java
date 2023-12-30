@@ -15,7 +15,6 @@ public class User {
     private Long id;
     @NotBlank
     private String username;
-    @NotBlank
     private String pronoun;
     @NotBlank
     @Email private String email;

@@ -1,10 +1,19 @@
-import { Link } from "react-router-dom";
+import { Link, redirect } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import "../css/userProfile.css";
+import { CgProfile } from "react-icons/cg";
+import Navigation from "./Navigation";
+import { MdEdit } from "react-icons/md";
+
 function UserProfile() {
   const [errorMessage, setErrorMessage] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const username = localStorage.getItem("username");
+  const [data, setData] = useState({});
+  const [editData, setEditData] = useState({ data });
+  const [user, setUser] = useState("");
+
+  const [isEditEnable, setIsEditEnable] = useState(false);
 
   const [file, setFile] = useState();
 
@@ -23,64 +32,179 @@ function UserProfile() {
         }
       );
 
-      const data = await response.json();
-      console.log(data);
+      const userData = await response.json();
+      //setData(userData);
+      setUser(userData);
+      console.log(userData);
       if (response.ok) {
         localStorage.setItem("username", username);
         setIsLoading(false);
       } else {
-        setErrorMessage(data.errorMessage);
+        setErrorMessage(userData.errorMessage);
         setIsLoading(false);
       }
     };
 
-    setTimeout(() => {
-      if (isLoading) {
-        userProfile();
+    // {
+    //   "id": 1,
+    //   "username": "Vartika",
+    //   "pronoun": "she",
+    //   "email": "varti@test.com",
+    //   "password": "1234",
+    //   "lastLoggedIn": "2023-12-22T23:33:37.605430"
+    // }
+
+    // setTimeout(() => {
+    //   if (isLoading) {
+    //     userProfile();
+    //   }
+    // }, []);
+    userProfile();
+  }, []);
+
+  const saveData = async (e) => {
+    e.preventDefault();
+
+    const response = await fetch(
+      "http://localhost:8080/userProfile/" + username,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(user),
       }
-    }, []);
-  });
+    );
+    setIsEditEnable(false);
+  };
+
+  const handleChange = (field, value) => {
+    let updatedUser = { ...user };
+    updatedUser[field] = value;
+    setUser(updatedUser);
+  };
+
+  const editProfileHandler = () => {
+    setIsEditEnable(true);
+  };
+
+  const cancelEdit = () => {
+    window.location.href = "/user";
+  };
 
   return (
     <div>
       <div className="userProfile-nav">
         <h2>Welcome! {username}</h2>
+
         <div>
           <div>
-            <Link to={`/${username}/editProfile`}>Edit</Link>
+            {/* <Link to={`/${username}/editProfile`}>Edit</Link>
             &nbsp;&nbsp;
             <Link to="/userCollection">User Collection</Link>
             &nbsp;&nbsp;
-            <Link to="/searchMusic">Find Music</Link>
+            <Link to="/searchMusic">Find Music</Link> */}
+            <Navigation />
           </div>
         </div>
       </div>
       <div>
-            <h4>Upload Image:</h4>
-            <input type="file" onChange={handleImageUpload} />
-            <img src={file} />
+        <div className="w50">
+          <CgProfile />
+          <h4>Upload Image:</h4>
+          <input type="file" onChange={handleImageUpload} />
+          <img src={file} />
         </div>
-      <div>
-        <table>
-          <thead>
-          <tr>
-              <th>User Profile</th>
-            </tr>
-          <tr>
-              <td>Username</td>
-            </tr>
-            <tr>
-              <td>email</td>
-            </tr>
-            <tr>
-              <td>pronoun</td>
-            </tr>
-            <tr>
-              {/* <td>{data.email}</td>
-              <td>{data.pronoun}</td> */}
-            </tr>
-          </thead>
-        </table>
+        <div className="w50">
+          {!isEditEnable && (
+            <table>
+              <thead>
+                <tr>
+                  <th>User Profile </th>
+
+                  <th>
+                    <span onClick={editProfileHandler}>
+                      <MdEdit />
+                    </span>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Username: </td>
+                  <td>{user.username}</td>
+                </tr>
+                <tr>
+                  <td>Email: </td>
+                  <td>{user.email}</td>
+                </tr>
+                <tr>
+                  <td>Pronoun: </td>
+                  <td>{user.pronoun}</td>
+                </tr>
+              </tbody>
+            </table>
+          )}
+          {isEditEnable && (
+            <div className="register-form">
+              <div className="username form-group">
+                <label for="username">Username </label>
+                <input
+                  type="text"
+                  value={user.username}
+                  id="username"
+                  placeholder="Username"
+                  onChange={(e) => handleChange("username", e.target.value)}
+                />
+              </div>
+              <div className="pronoun form-group">
+                <label for="pronoun">Pronoun </label>
+                <select
+                  className="select"
+                  value={user.pronoun}
+                  id="pronoun"
+                  placeholder="Pronoun"
+                  onChange={(e) => handleChange("pronoun", e.target.value)}
+                >
+                  <option value="">Select</option>
+                  <option value="he">He/His</option>
+                  <option value="she">She/Her</option>
+                  <option value="they">They/Them</option>
+                </select>
+              </div>
+              <div className="email form-group">
+                <label for="email">Email </label>
+                <input
+                  type="text"
+                  value={user.email}
+                  id="email"
+                  placeholder="Email"
+                  onChange={(e) => handleChange("email", e.target.value)}
+                />
+              </div>
+              <div className="password form-group">
+                <label for="password">Password </label>
+                <input
+                  type="password"
+                  value={user.password}
+                  id="password"
+                  placeholder="Password"
+                  onChange={(e) => handleChange("password", e.target.value)}
+                />
+              </div>
+              <div className="footer">
+                <button
+                  type="submit"
+                  onClick={saveData}
+                  className="save_button"
+                >
+                  Save
+                </button>
+                <button onClick={cancelEdit} className="cancel_button">
+                  Cancel
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

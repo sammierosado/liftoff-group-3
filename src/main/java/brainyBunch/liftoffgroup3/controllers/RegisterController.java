@@ -22,10 +22,7 @@ public class RegisterController {
     }
     @PostMapping("/register")
     public ResponseEntity<Object> createUser(@RequestBody User user) throws Exception {
-        boolean userExist = userService.checkEmail(user.getEmail());
-        if(userExist){
-            return new ResponseEntity<>(new ErrorDTO("User already exist", HttpStatus.BAD_REQUEST),HttpStatus.BAD_REQUEST);
-        }
+
         if(null == user.getUsername()) {
             return new ResponseEntity<>(new ErrorDTO("Username required.", HttpStatus.UNPROCESSABLE_ENTITY), HttpStatus.UNPROCESSABLE_ENTITY);
         }
@@ -34,7 +31,8 @@ public class RegisterController {
         }
         if(null == user.getEmail()) {
             return new ResponseEntity<>(new ErrorDTO("Email is required.", HttpStatus.UNPROCESSABLE_ENTITY), HttpStatus.UNPROCESSABLE_ENTITY);
-        } else if(user.getEmail()!=null && user.getEmail().trim().equals("")){
+        }
+        else if(user.getEmail()!=null && user.getEmail().trim().equals("")){
             return new ResponseEntity<>(new ErrorDTO("Email can not be blank.",HttpStatus.UNPROCESSABLE_ENTITY),HttpStatus.UNPROCESSABLE_ENTITY);
         }
 
@@ -43,12 +41,16 @@ public class RegisterController {
         } else if(user.getPassword()!=null && user.getPassword().trim().equals("")){
             return new ResponseEntity<>(new ErrorDTO("Password can not be blank.",HttpStatus.UNPROCESSABLE_ENTITY),HttpStatus.UNPROCESSABLE_ENTITY);
         }
+        boolean userExist = userService.checkEmail(user.getEmail());
+        if(userExist){
+            return new ResponseEntity<>(new ErrorDTO("User already exist", HttpStatus.BAD_REQUEST),HttpStatus.BAD_REQUEST);
+        }
         System.out.println("create user");
         User newUser = userService.createUser(user);
         if(newUser!=null){
             return new ResponseEntity<>(newUser,HttpStatus.OK);
         }else{
-            throw new Exception("User details not valid!");
+            return new ResponseEntity<>("Something went wrong.",HttpStatus.INTERNAL_SERVER_ERROR);
         }
         }
 

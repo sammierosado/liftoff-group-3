@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import "../css/registerPage.css";
 import { json, redirect } from "react-router-dom";
+import Navigation from "./Navigation";
 
 function Register() {
   const [user, setUser] = useState({
@@ -34,18 +35,6 @@ function Register() {
 
   const saveUser = async (e) => {
     e.preventDefault();
-    // const response = await fetch("http://localhost:8080/register", {
-    //   method: "POST",
-    //   headers: { "Content-Type": "application/json" },
-    //   body: JSON.stringify(user),
-    // })
-    //   .then((response) => {
-    //     document.location.href="/";
-    //   })
-    //   .catch((error) => {
-    //     alert(error);
-    //   });
-
     try {
       const response = await fetch("http://localhost:8080/register", {
         method: "POST",
@@ -68,6 +57,7 @@ function Register() {
   return (
     <div className="register">
       <div>
+        <Navigation />
         <h1>User Registration</h1>
         {errorMessage && <p className="error">{errorMessage}</p>}
         <div className="register-form">

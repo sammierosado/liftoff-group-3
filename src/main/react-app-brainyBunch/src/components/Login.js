@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "../css/loginPage.css";
 import { json } from "react-router";
+import Navigation from "./Navigation";
 
 function Login() {
   const [username, setUsername] = useState(null);
@@ -35,7 +36,7 @@ function Login() {
       console.log(data.errorMessage);
       if (response.ok) {
         localStorage.setItem("username", username);
-        document.location.href = "/";
+        window.location.href = "/user";
       } else {
         setErrorMessage(data.errorMessage);
       }
@@ -48,6 +49,7 @@ function Login() {
   return (
     <div className="login">
       <div className="login-form">
+        <Navigation />
         <h1>User Login</h1>
         {errorMessage && <p className="error">{errorMessage}</p>}
         <div className="username form-group">
