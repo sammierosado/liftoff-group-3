@@ -9,9 +9,8 @@ function UserProfile() {
   const [errorMessage, setErrorMessage] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const username = localStorage.getItem("username");
-  const [data, setData] = useState({});
-  const [editData, setEditData] = useState({ data });
-  const [user, setUser] = useState("");
+  const [user, setUser] = useState({});
+  const [editData, setEditData] = useState({ user });
 
   const [isEditEnable, setIsEditEnable] = useState(false);
 
@@ -23,6 +22,7 @@ function UserProfile() {
   };
 
   useEffect(() => {
+    console.log(username);
     const userProfile = async () => {
       const response = await fetch(
         "http://localhost:8080/userProfile/" + username,
@@ -33,7 +33,6 @@ function UserProfile() {
       );
 
       const userData = await response.json();
-      //setData(userData);
       setUser(userData);
       console.log(userData);
       if (response.ok) {
@@ -64,15 +63,28 @@ function UserProfile() {
 
   const saveData = async (e) => {
     e.preventDefault();
-
+    const requestBody = {
+      username: user.username,
+      pronoun: user.pronoun,
+      email: user.email,
+    };
     const response = await fetch(
       "http://localhost:8080/userProfile/" + username,
       {
-        method: "POST",
+        method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(user),
+        body: JSON.stringify(requestBody),
       }
     );
+
+    const resdata = await response.json();
+    console.log(resdata.errorMessage);
+    if (response.ok) {
+      localStorage.setItem("username", user.username);
+      document.location.href = "/user";
+    } else {
+      setErrorMessage(resdata.errorMessage);
+    }
     setIsEditEnable(false);
   };
 
@@ -114,19 +126,16 @@ function UserProfile() {
           <img src={file} />
         </div>
         <div className="w50">
+          <h2>
+            User Profile
+            {!isEditEnable && (
+              <span onClick={editProfileHandler} className="editIcon">
+                <MdEdit />
+              </span>
+            )}
+          </h2>
           {!isEditEnable && (
             <table>
-              <thead>
-                <tr>
-                  <th>User Profile </th>
-
-                  <th>
-                    <span onClick={editProfileHandler}>
-                      <MdEdit />
-                    </span>
-                  </th>
-                </tr>
-              </thead>
               <tbody>
                 <tr>
                   <td>Username: </td>
@@ -152,7 +161,8 @@ function UserProfile() {
                   value={user.username}
                   id="username"
                   placeholder="Username"
-                  onChange={(e) => handleChange("username", e.target.value)}
+                  readOnly={true}
+                  // onChange={(e) => handleChange("username", e.target.value)}
                 />
               </div>
               <div className="pronoun form-group">
@@ -187,7 +197,7 @@ function UserProfile() {
                   value={user.password}
                   id="password"
                   placeholder="Password"
-                  onChange={(e) => handleChange("password", e.target.value)}
+                  readOnly={true}
                 />
               </div>
               <div className="footer">
