@@ -4,6 +4,7 @@
   justify-content: space-between;
   align-items: center;
 }
+
 .w50 {
   width: 50%;
   float: left;
@@ -12,5 +13,4 @@
 .editIcon {
   padding-left: 30px;
 }
-
 

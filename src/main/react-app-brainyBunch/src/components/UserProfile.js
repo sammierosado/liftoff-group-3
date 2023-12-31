@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import "../css/userProfile.css";
 import { CgProfile } from "react-icons/cg";
@@ -22,6 +23,7 @@ function UserProfile() {
 
   useEffect(() => {
     console.log(username);
+
     const userProfile = async () => {
       const response = await fetch(
         "http://localhost:8080/userProfile/" + username,
@@ -31,13 +33,16 @@ function UserProfile() {
         }
       );
 
+
       const userData = await response.json();
       setUser(userData);
       console.log(userData);
+
       if (response.ok) {
         localStorage.setItem("username", username);
         setIsLoading(false);
       } else {
+
         setErrorMessage(userData.errorMessage);
         setIsLoading(false);
       }
@@ -86,10 +91,12 @@ function UserProfile() {
     window.location.href = "/user";
   };
 
+
   return (
     <div>
       <div className="userProfile-nav">
         <h2>Welcome! {username}</h2>
+
 
         <div>
           <div>
@@ -192,6 +199,7 @@ function UserProfile() {
               </div>
             </div>
           )}
+
         </div>
       </div>
     </div>

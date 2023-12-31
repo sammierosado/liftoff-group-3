@@ -10,6 +10,8 @@ import Logout from "./components/Logout";
 import Register from "./components/Register";
 import UserProfile from "./components/UserProfile";
 import RandomMusicPage from "./components/RandomMusicPage";
+import CollectionComponent from "./components/CollectionPage";
+import CollectionPage from "./components/CollectionPage";
 
 function App() {
   return (
@@ -23,6 +25,7 @@ function App() {
           <Route path="/logout" element={<Logout />} />
           <Route path="/user" element={<UserProfile />} />
           <Route path="/randompage" element={<RandomMusicPage />} />
+          <Route path="/collections" element={<CollectionPage />} />
         </Routes>
       </div>
     </Router>
