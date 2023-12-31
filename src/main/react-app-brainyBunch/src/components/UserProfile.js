@@ -1,4 +1,3 @@
-import { Link, redirect } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import "../css/userProfile.css";
 import { CgProfile } from "react-icons/cg";
@@ -43,21 +42,6 @@ function UserProfile() {
         setIsLoading(false);
       }
     };
-
-    // {
-    //   "id": 1,
-    //   "username": "Vartika",
-    //   "pronoun": "she",
-    //   "email": "varti@test.com",
-    //   "password": "1234",
-    //   "lastLoggedIn": "2023-12-22T23:33:37.605430"
-    // }
-
-    // setTimeout(() => {
-    //   if (isLoading) {
-    //     userProfile();
-    //   }
-    // }, []);
     userProfile();
   }, []);
 
@@ -109,11 +93,6 @@ function UserProfile() {
 
         <div>
           <div>
-            {/* <Link to={`/${username}/editProfile`}>Edit</Link>
-            &nbsp;&nbsp;
-            <Link to="/userCollection">User Collection</Link>
-            &nbsp;&nbsp;
-            <Link to="/searchMusic">Find Music</Link> */}
             <Navigation />
           </div>
         </div>
@@ -162,7 +141,6 @@ function UserProfile() {
                   id="username"
                   placeholder="Username"
                   readOnly={true}
-                  // onChange={(e) => handleChange("username", e.target.value)}
                 />
               </div>
               <div className="pronoun form-group">
