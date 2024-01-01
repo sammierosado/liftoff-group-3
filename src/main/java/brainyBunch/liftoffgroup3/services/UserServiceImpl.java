@@ -1,7 +1,9 @@
 package brainyBunch.liftoffgroup3.services;
 
 import brainyBunch.liftoffgroup3.model.User;
+import brainyBunch.liftoffgroup3.model.UserProfileDTO;
 import brainyBunch.liftoffgroup3.model.repository.UserRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,6 +37,19 @@ public class UserServiceImpl implements UserService{
             userRepository.save(loggedInUser);
             return loggedInUser;
         }else{
+            return null;
+        }
+    }
+    @Override
+    @Transactional
+    public User updateUserProfile(User user, UserProfileDTO userProfileDTO) {
+
+        if (null != user) {
+            user.setUsername(userProfileDTO.getUsername());
+            user.setEmail(userProfileDTO.getEmail());
+            user.setPronoun(userProfileDTO.getPronoun());
+            return userRepository.save(user);
+        } else {
             return null;
         }
     }
