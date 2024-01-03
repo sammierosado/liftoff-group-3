@@ -1,7 +1,6 @@
 import React from "react";
 import "../css/homePage.css";
 import { Link } from "react-router-dom";
-import CollectionBoard from "./CollectionBoard";
 
 function HomePage() {
   return (
@@ -12,7 +11,6 @@ function HomePage() {
           <Link to="/login">Login</Link>
         </span>
       </div>
-      <CollectionBoard />
     </div>
   );
 }
