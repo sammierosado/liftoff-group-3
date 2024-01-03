@@ -1,11 +1,7 @@
 import React from "react";
 import "../css/homePage.css";
 import { Link } from "react-router-dom";
-
 import Navigation from "./Navigation";
-
-import CollectionBoard from "./CollectionBoard";
-
 
 function HomePage() {
   return (
@@ -17,7 +13,6 @@ function HomePage() {
           <Navigation />
         </span>
       </div>
-      <CollectionBoard />
     </div>
   );
 }
