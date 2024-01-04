@@ -1,8 +1,5 @@
 package brainyBunch.liftoffgroup3.model;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -22,12 +19,21 @@ public class User {
     private String password;
     @NotBlank
     private String lastLoggedIn;
+    private String profile_img_url;
     public Long getId() {
         return id;
     }
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getProfile_Img_url() {
+        return profile_img_url;
+    }
+
+    public void setProfile_Img_url(String profile_img_url) {
+        this.profile_img_url = profile_img_url;
     }
 
     public String getUsername() {
@@ -69,13 +75,14 @@ public class User {
         this.lastLoggedIn = lastLoggedIn;
     }
 
-    public User(Long id, String username, String pronoun, String email, String password, String lastLoggedIn) {
+    public User(Long id, String username, String pronoun, String email, String password, String lastLoggedIn,String profile_img_url) {
         this.id = id;
         this.username = username;
         this.pronoun = pronoun;
         this.email = email;
         this.password = password;
         this.lastLoggedIn = lastLoggedIn;
+        this.profile_img_url=profile_img_url;
     }
     public User() {
     }

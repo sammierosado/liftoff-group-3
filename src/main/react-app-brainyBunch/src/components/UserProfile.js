@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import "../css/userProfile.css";
 import { CgProfile } from "react-icons/cg";
@@ -11,15 +10,49 @@ function UserProfile() {
   const username = localStorage.getItem("username");
   const [user, setUser] = useState({});
   const [editData, setEditData] = useState({ user });
-
+  const [userProfileImage, setUserProfileImage] = useState("");
   const [isEditEnable, setIsEditEnable] = useState(false);
-
   const [file, setFile] = useState();
 
-  const handleImageUpload = (e) => {
-    console.log(e.target.files);
-    setFile(URL.createObjectURL(e.target.files[0]));
+  // const handleImageUpload = async (e) => {
+  //   var formData = new FormData();
+  //   const file = e.target.files[0];
+  //   if (file) {
+  //     const reader = new FileReader();
+  //   }
+  //   formData.append("file", file);
+  //   console.log(e.target.files[0]);
+
+  //   const userProfileImage = await response.json();
+  //   setUserProfileImage(userProfileImage);
+  //   console.log(userProfileImage);
+  //   // console.log(e.target.files);
+  //   // setFile(URL.createObjectURL(e.target.files[0]));
+  // };
+
+  const [selectedFile, setSelectedFile] = useState(null);
+
+  const handleFileChange = (e) => {
+    setSelectedFile(e.target.files[0]);
   };
+
+  const handleImageUpload = () => {
+    if (selectedFile) {
+      const formData = new FormData();
+      formData.append("file", selectedFile);
+      fetch("http://localhost:8080/uploadImage/" + username, {
+        method: "post",
+        body: formData,
+      })
+        .then((response) => response.text())
+        .then((message) => console.log(message))
+        .catch((error) => console.error("Error:", error));
+      // axios.post('http://localhost:8080/')
+    }
+  };
+
+  // const userProfileImage = await response.json();
+  // setUserProfileImage(userProfileImage);
 
   useEffect(() => {
     console.log(username);
@@ -33,7 +66,6 @@ function UserProfile() {
         }
       );
 
-
       const userData = await response.json();
       setUser(userData);
       console.log(userData);
@@ -42,7 +74,6 @@ function UserProfile() {
         localStorage.setItem("username", username);
         setIsLoading(false);
       } else {
-
         setErrorMessage(userData.errorMessage);
         setIsLoading(false);
       }
@@ -66,21 +97,15 @@ function UserProfile() {
       }
     );
 
-    const resdata = await response.json();
-    console.log(resdata.errorMessage);
+    const responseData = await response.json();
+    console.log(responseData.errorMessage);
     if (response.ok) {
       localStorage.setItem("username", user.username);
       document.location.href = "/user";
     } else {
-      setErrorMessage(resdata.errorMessage);
+      setErrorMessage(responseData.errorMessage);
     }
     setIsEditEnable(false);
-  };
-
-  const handleChange = (field, value) => {
-    let updatedUser = { ...user };
-    updatedUser[field] = value;
-    setUser(updatedUser);
   };
 
   const editProfileHandler = () => {
@@ -91,12 +116,16 @@ function UserProfile() {
     window.location.href = "/user";
   };
 
+  const handleChange = (field, value) => {
+    let updatedUser = { ...user };
+    updatedUser[field] = value;
+    setUser(updatedUser);
+  };
 
   return (
     <div>
       <div className="userProfile-nav">
         <h2>Welcome! {username}</h2>
-
 
         <div>
           <div>
@@ -104,12 +133,13 @@ function UserProfile() {
           </div>
         </div>
       </div>
-      <div>
+      <div className="img-div">
         <div className="w50">
-          <CgProfile />
+          <CgProfile size={80} />
           <h4>Upload Image:</h4>
-          <input type="file" onChange={handleImageUpload} />
+          <input type="file" onChange={handleFileChange} />
           <img src={file} />
+          <button onClick={handleImageUpload}>Upload</button>
         </div>
         <div className="w50">
           <h2>
@@ -199,7 +229,6 @@ function UserProfile() {
               </div>
             </div>
           )}
-
         </div>
       </div>
     </div>
