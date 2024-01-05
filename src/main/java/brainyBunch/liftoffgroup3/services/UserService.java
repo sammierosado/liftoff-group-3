@@ -10,6 +10,10 @@ public interface UserService {
     public User isPasswordMatch(String username, String password);
     public User updateUserProfile(User user, UserProfileDTO userProfileDTO);
 
-    public void uploadProfileImageByUsername(String username, String imageUrl);
+    //public void uploadProfileImageByUsername(String username, String imageUrl);
+
+    public User saveProfileImageToDatabaseByUsername(String username, MultipartFile file);
+
+    byte[] fetchProfileImageByUsername(String username);
 
 }

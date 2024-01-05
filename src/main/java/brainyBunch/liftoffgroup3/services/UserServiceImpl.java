@@ -1,5 +1,6 @@
 package brainyBunch.liftoffgroup3.services;
 
+import brainyBunch.liftoffgroup3.exception.SpotifyException;
 import brainyBunch.liftoffgroup3.model.ErrorDTO;
 import brainyBunch.liftoffgroup3.model.User;
 import brainyBunch.liftoffgroup3.model.UserProfileDTO;
@@ -60,21 +61,59 @@ public class UserServiceImpl implements UserService{
         }
     }
 
+//    @Override
+//    @Transactional
+//    public void uploadProfileImageByUsername(String username, String fileDownloadUri) {
+//
+//        Optional<User> user = userRepository.findByUsername(username);
+//        User updatedUser = user.get();
+//        System.out.println("fileDownloadUri im impl ============================="+fileDownloadUri);
+//       if(null!= fileDownloadUri) {
+//           System.out.println("Image :------------" + fileDownloadUri);
+//           updatedUser.setProfile_Img_url(fileDownloadUri);
+//       }else{
+//            System.out.println("File not found");
+//            }
+//        userRepository.save(updatedUser);
+//    }
+
     @Override
     @Transactional
-    public void uploadProfileImageByUsername(String username, String fileDownloadUri) {
+    public User saveProfileImageToDatabaseByUsername(String username, MultipartFile file) {
+
+
+        if(null == username) {
+            throw new SpotifyException("Username is required", HttpStatus.BAD_REQUEST);
+        } else if("".equals(username.trim())) {
+            throw new SpotifyException("Username can not be empty", HttpStatus.BAD_REQUEST);
+        }
 
         Optional<User> user = userRepository.findByUsername(username);
-        User updatedUser = user.get();
-        System.out.println("fileDownloadUri im impl ============================="+fileDownloadUri);
-       if(null!= fileDownloadUri) {
-           System.out.println("Image :------------" + fileDownloadUri);
-           updatedUser.setProfile_Img_url(fileDownloadUri);
-       }else{
-            System.out.println("File not found");
-            }
-        userRepository.save(updatedUser);
+        User existingUser = user.get();
+
+        try {
+            existingUser.setProfile_Img_url(Base64.getEncoder().encodeToString(file.getBytes()));
+            return userRepository.save(existingUser);
+
+        } catch (IOException e) {
+            throw new SpotifyException("Unable to save image to database", HttpStatus.BAD_REQUEST);
+        }
     }
 
+    @Override
+    public byte[] fetchProfileImageByUsername(String username) {
+
+        if(null == username) {
+            throw new SpotifyException("Username is required", HttpStatus.BAD_REQUEST);
+        } else if("".equals(username.trim())) {
+            throw new SpotifyException("Username can not be empty", HttpStatus.BAD_REQUEST);
+        }
+
+
+        Optional<User> optionalUser = userRepository.findByUsername(username);
+        User existingUser = optionalUser.get();
+
+        return Base64.getDecoder().decode(existingUser.getProfile_Img_url());
+    }
 
 }

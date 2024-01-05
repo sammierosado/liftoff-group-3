@@ -20,6 +20,11 @@ public class User {
     @NotBlank
     private String lastLoggedIn;
     private String profile_img_url;
+
+    @Lob
+    @Column(name = "profile_image", columnDefinition = "MEDIUMBLOB")
+    private String profileImage;
+
     public Long getId() {
         return id;
     }
@@ -75,7 +80,15 @@ public class User {
         this.lastLoggedIn = lastLoggedIn;
     }
 
-    public User(Long id, String username, String pronoun, String email, String password, String lastLoggedIn,String profile_img_url) {
+    public String getProfileImage() {
+        return profileImage;
+    }
+
+    public void setProfileImage(String profileImage) {
+        this.profileImage = profileImage;
+    }
+
+    public User(Long id, String username, String pronoun, String email, String password, String lastLoggedIn, String profile_img_url, String profileImage) {
         this.id = id;
         this.username = username;
         this.pronoun = pronoun;
@@ -83,6 +96,7 @@ public class User {
         this.password = password;
         this.lastLoggedIn = lastLoggedIn;
         this.profile_img_url=profile_img_url;
+        this.profileImage=profileImage;
     }
     public User() {
     }
