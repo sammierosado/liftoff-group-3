@@ -3,33 +3,16 @@ import "../css/userProfile.css";
 import { CgProfile } from "react-icons/cg";
 import Navigation from "./Navigation";
 import { MdEdit } from "react-icons/md";
+import { json } from "react-router-dom";
 
 function UserProfile() {
   const [errorMessage, setErrorMessage] = useState("");
   const [isLoading, setIsLoading] = useState(true);
+  const [imageSource, setImageSource] = useState();
   const username = localStorage.getItem("username");
   const [user, setUser] = useState({});
-  const [editData, setEditData] = useState({ user });
-  const [userProfileImage, setUserProfileImage] = useState("");
   const [isEditEnable, setIsEditEnable] = useState(false);
   const [file, setFile] = useState();
-
-  // const handleImageUpload = async (e) => {
-  //   var formData = new FormData();
-  //   const file = e.target.files[0];
-  //   if (file) {
-  //     const reader = new FileReader();
-  //   }
-  //   formData.append("file", file);
-  //   console.log(e.target.files[0]);
-
-  //   const userProfileImage = await response.json();
-  //   setUserProfileImage(userProfileImage);
-  //   console.log(userProfileImage);
-  //   // console.log(e.target.files);
-  //   // setFile(URL.createObjectURL(e.target.files[0]));
-  // };
-
   const [selectedFile, setSelectedFile] = useState(null);
 
   const handleFileChange = (e) => {
@@ -39,20 +22,34 @@ function UserProfile() {
   const handleImageUpload = () => {
     if (selectedFile) {
       const formData = new FormData();
-      formData.append("file", selectedFile);
+      formData.append("image", selectedFile);
       fetch("http://localhost:8080/uploadImage/" + username, {
         method: "post",
         body: formData,
       })
         .then((response) => response.text())
-        .then((message) => console.log(message))
+        .then((message) => {
+          console.log(message);
+          window.location.reload(true);
+        })
         .catch((error) => console.error("Error:", error));
-      // axios.post('http://localhost:8080/')
     }
   };
 
-  // const userProfileImage = await response.json();
-  // setUserProfileImage(userProfileImage);
+  const loadProfileImage = async () => {
+    const username = localStorage.getItem("username");
+    const response = await fetch(
+      `http://localhost:8080/profileImage/${username}`
+    );
+    if (!response.ok) {
+      setImageSource(null);
+    } else {
+      console.log(response);
+      const imageBlob = await response.blob();
+      const imageObjectURL = URL.createObjectURL(imageBlob);
+      setImageSource(imageObjectURL);
+    }
+  };
 
   useEffect(() => {
     console.log(username);
@@ -79,7 +76,11 @@ function UserProfile() {
       }
     };
     userProfile();
-  }, []);
+
+    if (!imageSource) {
+      loadProfileImage();
+    }
+  }, [imageSource]);
 
   const saveData = async (e) => {
     e.preventDefault();
@@ -135,8 +136,10 @@ function UserProfile() {
       </div>
       <div className="img-div">
         <div className="w50">
-          <CgProfile size={80} />
-          <h4>Upload Image:</h4>
+          {imageSource && <img src={imageSource} alt="Profile Photo" />}
+          {!imageSource && <CgProfile />}
+          {imageSource && <h4>Change profile image</h4>}
+          {!imageSource && <h4>Upload Image:</h4>}
           <input type="file" onChange={handleFileChange} />
           <img src={file} />
           <button onClick={handleImageUpload}>Upload</button>

@@ -6,23 +6,14 @@ import brainyBunch.liftoffgroup3.model.User;
 import brainyBunch.liftoffgroup3.model.UserProfileDTO;
 import brainyBunch.liftoffgroup3.model.repository.UserRepository;
 import brainyBunch.liftoffgroup3.services.UserService;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
-import java.awt.*;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import org.json.JSONObject;
 import java.util.Optional;
 
 @CrossOrigin(origins = "*")
@@ -92,11 +83,10 @@ public class UserProfileController {
     @PostMapping("/uploadImage/{username}")
     public ResponseEntity<String> saveProfileImageToDatabaseByUsername(@PathVariable String username, @RequestParam("image") MultipartFile file) throws IOException {
         try {
-
             User userProfile = userService.saveProfileImageToDatabaseByUsername(username, file);
             return new ResponseEntity<>(userProfile.toString(), HttpStatus.OK);
         } catch(SpotifyException e) {
-
+            return new ResponseEntity<>("Something went wrong", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

@@ -60,23 +60,6 @@ public class UserServiceImpl implements UserService{
             return null;
         }
     }
-
-//    @Override
-//    @Transactional
-//    public void uploadProfileImageByUsername(String username, String fileDownloadUri) {
-//
-//        Optional<User> user = userRepository.findByUsername(username);
-//        User updatedUser = user.get();
-//        System.out.println("fileDownloadUri im impl ============================="+fileDownloadUri);
-//       if(null!= fileDownloadUri) {
-//           System.out.println("Image :------------" + fileDownloadUri);
-//           updatedUser.setProfile_Img_url(fileDownloadUri);
-//       }else{
-//            System.out.println("File not found");
-//            }
-//        userRepository.save(updatedUser);
-//    }
-
     @Override
     @Transactional
     public User saveProfileImageToDatabaseByUsername(String username, MultipartFile file) {
@@ -92,7 +75,7 @@ public class UserServiceImpl implements UserService{
         User existingUser = user.get();
 
         try {
-            existingUser.setProfile_Img_url(Base64.getEncoder().encodeToString(file.getBytes()));
+            existingUser.setProfileImage(Base64.getEncoder().encodeToString(file.getBytes()));
             return userRepository.save(existingUser);
 
         } catch (IOException e) {
@@ -109,11 +92,13 @@ public class UserServiceImpl implements UserService{
             throw new SpotifyException("Username can not be empty", HttpStatus.BAD_REQUEST);
         }
 
-
         Optional<User> optionalUser = userRepository.findByUsername(username);
         User existingUser = optionalUser.get();
-
-        return Base64.getDecoder().decode(existingUser.getProfile_Img_url());
+        if(existingUser.getProfileImage() == null){
+            throw new SpotifyException("Profile image is not found", HttpStatus.NOT_FOUND);
+        }else{
+            return Base64.getDecoder().decode(existingUser.getProfileImage());
+        }
     }
 
 }
