@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Image Selector</title>
+</head>
+<body>
+  <input type="file" accept="image/*" onchange="previewImage(this)">
+  <!--This creates a file input element that allows users to select image 
+  files. The accept="image/*" attribute restricts the selection to image 
+  files only. The onchange event triggers the previewImage function when a file is chosen.-->
+  <br>
+  <img id="preview" src="" alt="Selected Image">
+  <!--This creates an image element with the ID "preview", which will be used to display the 
+  selected image. Initially, its src attribute is empty, and its alt text is "Selected Image".-->
+
+  <script>
+    function previewImage(input) {
+      const preview = document.getElementById("preview");
+      const file = input.files[0];
+
+      // Check if a file has been selected:
+      if (file) {
+        // Create a FileReader object to read the file content:
+        const reader = new FileReader();
+
+        // Set up an event handler for when the file is read successfully:
+        reader.onload = function(e) {
+          // Set the preview image's source to the data URL of the file:
+          preview.src = e.target.result;
+
+          // Store the data URL in localStorage to remember the selected image:
+          localStorage.setItem("selectedImage", e.target.result); // Store image URL
+        };
+
+        // Start reading the file:
+        reader.readAsDataURL(file);
+      } else {
+        // Clear the preview image if no file is selected:
+        preview.src = "";
+      }
+    }
+// When the page loads, check for a previously selected image:
+    window.onload = function() {
+      // Retrieve the stored image URL from localStorage:
+      const storedImageURL = localStorage.getItem("selectedImage");
+      // If a stored image URL exists:
+      if (storedImageURL) {
+        // Set the preview image's source to the stored image URL, displaying it immediately:
+        document.getElementById("preview").src = storedImageURL;
+      }
+    };
+  </script>
+</body>
+</html>
