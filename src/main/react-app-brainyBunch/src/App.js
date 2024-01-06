@@ -12,7 +12,7 @@ import UserProfile from "./components/UserProfile";
 import RandomMusicPage from "./components/RandomMusicPage";
 import CollectionComponent from "./components/CollectionPage";
 import CollectionPage from "./components/CollectionPage";
-
+import StamplistPage from "./components/StamplistPage";
 function App() {
   return (
     <Router>
@@ -26,6 +26,7 @@ function App() {
           <Route path="/user" element={<UserProfile />} />
           <Route path="/randompage" element={<RandomMusicPage />} />
           <Route path="/collections" element={<CollectionPage />} />
+          <Route path="/stamplist" element={<StamplistPage/>} />
         </Routes>
       </div>
     </Router>
