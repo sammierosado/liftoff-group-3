@@ -1,12 +1,11 @@
 package brainyBunch.liftoffgroup3.controllers;
 
-import brainyBunch.liftoffgroup3.model.ErrorDTO;
+import brainyBunch.liftoffgroup3.dto.ErrorDTO;
 import brainyBunch.liftoffgroup3.model.User;
-import brainyBunch.liftoffgroup3.model.UserProfileDTO;
+import brainyBunch.liftoffgroup3.dto.UserProfileDTO;
 import brainyBunch.liftoffgroup3.model.repository.UserRepository;
 import brainyBunch.liftoffgroup3.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

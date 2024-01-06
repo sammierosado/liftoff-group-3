@@ -26,6 +26,8 @@ dependencies {
 	//Robert: Added additional implementation "mysql:mysql-connector-java:8.0.32" for database connectivity.
 	//if it causes issues, please delete.
 	implementation ("mysql:mysql-connector-java:8.0.32")
+	implementation ("org.json:json:20231013")
+
 }
 
 tasks.withType<Test> {

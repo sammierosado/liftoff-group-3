@@ -1,6 +1,6 @@
 package brainyBunch.liftoffgroup3.controllers;
-import brainyBunch.liftoffgroup3.model.ErrorDTO;
-import brainyBunch.liftoffgroup3.model.LoginDTO;
+import brainyBunch.liftoffgroup3.dto.ErrorDTO;
+import brainyBunch.liftoffgroup3.dto.LoginDTO;
 import brainyBunch.liftoffgroup3.model.User;
 import brainyBunch.liftoffgroup3.model.repository.UserRepository;
 import brainyBunch.liftoffgroup3.services.UserService;

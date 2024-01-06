@@ -1,8 +1,9 @@
-package brainyBunch.liftoffgroup3.services;
+package brainyBunch.liftoffgroup3.services.impl;
 
 import brainyBunch.liftoffgroup3.model.User;
-import brainyBunch.liftoffgroup3.model.UserProfileDTO;
+import brainyBunch.liftoffgroup3.dto.UserProfileDTO;
 import brainyBunch.liftoffgroup3.model.repository.UserRepository;
+import brainyBunch.liftoffgroup3.services.UserService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,7 +12,7 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
 
