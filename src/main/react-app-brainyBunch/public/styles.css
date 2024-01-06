@@ -5,3 +5,10 @@
   button:active + .time-display {
     display: none;
   }
+
+  span{
+    background-image: linear-gradient(to right, #f79d73, #e84e5c);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 35px;
+  }
