@@ -8,7 +8,8 @@
 <body>
 <section>
 <h1>All Timestamps</h1>
-<form action="templates/stamplist.html" method="post">
+    
+<form th:action="@{/stamps/save}" method="post">
     <button type="submit">Save Timestamps</button>
 </form>
 <table>

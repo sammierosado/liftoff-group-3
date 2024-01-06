@@ -1,4 +1,4 @@
-function timeDateToggle() {
+ function timeDateToggle() {
     const timeElement = document.getElementById("timeDisplay");
     const currentTime = new Date();
     const hours = currentTime.getHours();
@@ -12,7 +12,8 @@ function timeDateToggle() {
     // Format the time and date based on your desired format
     const formattedTime = `${hours}:${minutes}:${seconds} - ${date}/${month}/${year}`;
   
-    timeElement.textContent = formattedTime;
+    timeElement.innerText = formattedTime;
+    console.log(timeElement)
   
     // Keep the time updated every second (optional)
     setInterval(() => {
@@ -24,7 +25,7 @@ function timeDateToggle() {
       }
 
       const formattedTime = `Real Time:${currentTime.getHours()}:${currentTime.getMinutes()}:${currentTime.getSeconds()}/ Today's Date:${month}-${currentTime.getDate()}-${currentTime.getFullYear()}`;
-      timeElement.textContent = formattedTime;
+      timeElement.innerText = formattedTime;
     }, 1000);
   
     if (timeElement.style.display === "none") {
