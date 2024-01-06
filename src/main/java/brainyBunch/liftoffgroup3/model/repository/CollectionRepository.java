@@ -9,5 +9,5 @@ import java.util.Optional;
 
 @Repository
 public interface CollectionRepository extends JpaRepository<Collection, Long> {
-    // You can define custom queries or methods here if needed
+
 }
