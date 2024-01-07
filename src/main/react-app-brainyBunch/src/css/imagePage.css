@@ -1,0 +1,12 @@
+.image-input {
+  display: none; /* Hide the actual file input */
+}
+
+.image-input + label {
+  display: inline-block;
+  background: #ddd; /* Button background color */
+  padding: 10px 15px; /* Button padding */
+  border: 1px solid #ccc; /* Button border */
+  border-radius: 4px; /* Button rounded corners */
+  cursor: pointer; /* Pointer cursor */
+}

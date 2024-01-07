@@ -1,8 +1,5 @@
 package brainyBunch.liftoffgroup3.models;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -12,9 +9,10 @@ public class stamp {
     // Primary key of the entity, automatically generated with unique values.
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     // Stores the timestamp value.
+    @Column(name = "stamp_time", columnDefinition = "TIMESTAMP")
     private LocalDateTime stampTime;
     private String actionDescription;
 
@@ -49,11 +47,11 @@ public class stamp {
     }
 
     // Standard getter and setter for the primary key.
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

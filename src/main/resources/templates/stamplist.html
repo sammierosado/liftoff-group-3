@@ -1,31 +1,20 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org/"
-      th:replace="base::Layout(~{::section})">
+<html lang="en" xmlns:th="http://www.thymeleaf.org/" th:fragment="Layout(content)">
 <head>
-    <meta charset="UTF-8">
-    <title>All Timestamps</title>
+    <title>Create Stamp Entry</title>
 </head>
 <body>
-<section>
-<h1>All Timestamps</h1>
-    
-<form th:action="@{/stamps/save}" method="post">
-    <button type="submit">Save Timestamps</button>
+<th:block th:replace="${content}"></th:block>
+
+<h1>Create Stamp Entry</h1>
+<form th:action="@{/stamps/save}" method="POST">
+    <button type="submit">Create Entry</button>
 </form>
-<table>
-    <thead>
-    <tr>
-        <th>Timestamp</th>
-        <th>Action (optional)</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="stamp : ${allStamps}">
-        <td><span th:text="${stamp.getStampTime()}"></span></td>
-        <td th:if="${stamp.action != null}">th:text="${stamp.action}"</td>
-    </tr>
-    </tbody>
-</table>
-</section>
+
+<p th:if="${#request.getAttribute('successMessage') != null}">Entry created successfully!</p>
+
+<script>
+    /* Optional script for client-side validation or enhancements */
+</script>
 </body>
 </html>
