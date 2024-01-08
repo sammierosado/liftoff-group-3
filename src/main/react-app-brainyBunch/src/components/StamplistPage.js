@@ -1,4 +1,5 @@
 import React from "react";
+import Navigation from "./Navigation";
 
 function StamplistPage(){
 
@@ -22,6 +23,10 @@ function StamplistPage(){
 
     return(
 <section>
+<Navigation />
+<br></br>
+<br></br>
+<br></br>
 <h1>All Timestamps</h1>
 
 {/* look up react syntax to replace thymleaf code */}

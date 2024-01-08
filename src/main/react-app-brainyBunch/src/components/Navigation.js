@@ -24,22 +24,27 @@ const Navigation = () => {
               <a href="/login">Login</a>
             </li>
           )}
-          {isLoggedIn && (
+          {!isLoggedIn && (
             <li>
-              <a href="/collection">Collection</a>
+              <a href="/collections">Collection</a>
             </li>
           )}
-          {isLoggedIn && (
+          {!isLoggedIn && (
             <li>
               <a href="/user">Profile</a>
             </li>
           )}
-          {isLoggedIn && (
+          {!isLoggedIn && (
             <li>
               <a href="/search">Find Music</a>
             </li>
           )}
-          {isLoggedIn && (
+          {!isLoggedIn && (
+            <li>
+              <a href="/stamplist">Event History</a>
+            </li>
+          )}
+          {!isLoggedIn && (
             <li>
               {/* <Form action="/logout" method="post"> */}
               <button onClick={handleLogout}>Logout</button>

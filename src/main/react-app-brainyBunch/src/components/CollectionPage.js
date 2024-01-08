@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "../css/collectionBoard.css";
+import Navigation from "./Navigation";
 
 const CollectionPage = ({ onAddSong }) => {
   const [collections, setCollections] = useState([]);
@@ -30,6 +31,7 @@ const CollectionPage = ({ onAddSong }) => {
 
   return (
     <div>
+      <Navigation />
       <h1>Your Collections</h1>
       <input
         type="text"
