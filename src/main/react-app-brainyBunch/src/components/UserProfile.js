@@ -117,28 +117,33 @@ function UserProfile() {
     window.location.href = "/user";
   };
 
-
   const handleChange = (field, value) => {
     let updatedUser = { ...user };
     updatedUser[field] = value;
     setUser(updatedUser);
   };
 
-
   return (
     <div>
-      <div className="userProfile-nav">
-        <h2>Welcome! {username}</h2>
-
-        <div>
+       <div>
           <div>
             <Navigation />
           </div>
         </div>
+      <div className="userProfile-nav">
+        <h2>Welcome! {username}</h2>
+
+       
       </div>
       <div className="img-div">
         <div className="w50">
-          {imageSource && <img src={imageSource} alt="Profile Photo" />}
+          {imageSource && (
+            <img
+              src={imageSource}
+              className="profile_image"
+              alt="Profile Photo"
+            />
+          )}
           {!imageSource && <CgProfile />}
           {imageSource && <h4>Change profile image</h4>}
           {!imageSource && <h4>Upload Image:</h4>}

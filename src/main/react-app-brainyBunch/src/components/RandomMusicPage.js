@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import { Routes, Route, Link } from "react-router-dom";
 import LikedSongsPage from "./LikedSongsPage";
@@ -122,8 +121,6 @@ function RandomMusicPage() {
 }
 
 export default RandomMusicPage;
-
-
 
 // import { useEffect, useState } from "react";
 // import "../css/randomPage.css";
