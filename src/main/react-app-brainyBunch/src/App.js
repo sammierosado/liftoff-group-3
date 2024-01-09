@@ -12,7 +12,8 @@ import UserProfile from "./components/UserProfile";
 import RandomMusicPage from "./components/RandomMusicPage";
 import CollectionComponent from "./components/CollectionPage";
 import CollectionPage from "./components/CollectionPage";
-
+import StamplistPage from "./components/StamplistPage";
+import ImagePage from "./components/ImagePage";
 function App() {
   return (
     <Router>
@@ -22,10 +23,12 @@ function App() {
           <Route path="/likedsongs" element={<LikedSongsPage />} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/logout" element={<Logout />} />
+          <Route path="/logout" element={<Logout />} />   
           <Route path="/user" element={<UserProfile />} />
           <Route path="/randompage" element={<RandomMusicPage />} />
           <Route path="/collections" element={<CollectionPage />} />
+          <Route path="/stamplist" element={<StamplistPage/>} />
+          <Route path="/imagepage" element={<ImagePage/>} />
         </Routes>
       </div>
     </Router>

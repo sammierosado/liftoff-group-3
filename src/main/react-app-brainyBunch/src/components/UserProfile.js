@@ -117,11 +117,13 @@ function UserProfile() {
     window.location.href = "/user";
   };
 
+
   const handleChange = (field, value) => {
     let updatedUser = { ...user };
     updatedUser[field] = value;
     setUser(updatedUser);
   };
+
 
   return (
     <div>
