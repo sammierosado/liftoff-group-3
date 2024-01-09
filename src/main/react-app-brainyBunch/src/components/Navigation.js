@@ -43,6 +43,10 @@ const Navigation = () => {
             <li>
               <a href="/stamplist">Event History</a>
             </li>
+          )}{isLoggedIn && (
+            <li>
+              <a href="/setting">Settings</a>
+            </li>
           )}
           {isLoggedIn && (
             <li>
