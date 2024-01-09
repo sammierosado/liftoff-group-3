@@ -53,6 +53,4 @@ public class RegisterController {
             return new ResponseEntity<>("Something went wrong.",HttpStatus.INTERNAL_SERVER_ERROR);
         }
         }
-
-
     }
