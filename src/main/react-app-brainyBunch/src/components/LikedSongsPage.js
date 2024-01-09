@@ -1,20 +1,18 @@
-import React from "react";
-
-// import React, { useState } from "react";
-// import axios from "axios";
+import React, { useState } from "react";
+import axios from "axios";
 
 function LikedSongsPage({ likedAlbums, onLikeButtonClick }) {
   const [newLikedSong, setNewLikedSong] = useState({
     likedSongs: "",
     artistName: "",
-    albumName: ""
+    albumName: "",
   });
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setNewLikedSong({
       ...newLikedSong,
-      [name]: value
+      [name]: value,
     });
   };
 
@@ -30,7 +28,7 @@ function LikedSongsPage({ likedAlbums, onLikeButtonClick }) {
       setNewLikedSong({
         likedSongs: "",
         artistName: "",
-        albumName: ""
+        albumName: "",
       });
     } catch (error) {
       console.error("Error adding liked song", error);
@@ -42,9 +40,7 @@ function LikedSongsPage({ likedAlbums, onLikeButtonClick }) {
       <h2>Liked Songs</h2>
       <ul>
         {likedAlbums && likedAlbums.length > 0 ? (
-          likedAlbums.map((likedAlbum, i) => (
-            <li key={i}>{likedAlbum.name}</li>
-          ))
+          likedAlbums.map((likedAlbum, i) => <li key={i}>{likedAlbum.name}</li>)
         ) : (
           <p>No liked songs yet.</p>
         )}
@@ -85,7 +81,6 @@ function LikedSongsPage({ likedAlbums, onLikeButtonClick }) {
 
 export default LikedSongsPage;
 
-
 // function LikedSongsPage({ likedAlbums }) {
 //   return (
 //     <div>
@@ -103,7 +98,6 @@ export default LikedSongsPage;
 //   );
 // }
 
-
 // export default LikedSongsPage;
 
 // import React from "react";
@@ -118,6 +112,3 @@ export default LikedSongsPage;
 // }
 
 // export default LikedSongs;
-
-
-

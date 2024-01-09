@@ -65,9 +65,9 @@ const CollectionPage = ({ onAddSong }) => {
       >
         <img src="rock-music.webp" alt="Rock" className="img"></img>
         <div className="container">
-          <h4>
-            <b>Rock</b>
-          </h4>
+          <a href="/rockpage" id="special">
+            Rock
+          </a>
           <p>Default Collection</p>
         </div>
       </div>
@@ -79,9 +79,9 @@ const CollectionPage = ({ onAddSong }) => {
       >
         <img src="jazz.webp" alt="Jazz" className="img"></img>
         <div className="container">
-          <h4>
-            <b>Jazz</b>
-          </h4>
+          <a href="/jazzpage" id="special">
+            Jazz
+          </a>
           <p>Default Collection</p>
         </div>
       </div>
@@ -93,9 +93,9 @@ const CollectionPage = ({ onAddSong }) => {
       >
         <img src="rap.jpeg" alt="Rap" className="img"></img>
         <div className="container">
-          <h4>
-            <b>Rap</b>
-          </h4>
+          <a href="/rappage" id="special">
+            Rap
+          </a>
           <p>Default Collection</p>
         </div>
       </div>
