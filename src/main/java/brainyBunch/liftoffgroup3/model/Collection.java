@@ -10,8 +10,8 @@ public class Collection {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotBlank
-    private String collection;
+//    @NotBlank
+//    private String userId;
     @NotBlank
     public String collectionName;
     @NotBlank
@@ -27,13 +27,13 @@ public class Collection {
         this.id = id;
     }
 
-    public String getCollection() {
-        return collection;
-    }
-
-    public void setCollection(String collection) {
-        this.collection = collection;
-    }
+//    public String getUserId() {
+//        return userId;
+//    }
+//
+//    public void setUserId(String userId) {
+//        this.userId = userId;
+//    }
 
     public String getCollectionName() {
         return collectionName;
@@ -59,9 +59,10 @@ public class Collection {
         this.artistName = artistName;
     }
 
-    public Collection(Long id, String collection, String collectionName, String albumName, String artistName) {
+    public Collection(Long id, String collectionName, String albumName, String artistName) {
+//    public Collection(Long id, String userId, String collectionName, String albumName, String artistName) {
         this.id = id;
-        this.collection = collection;
+//        this.userId = userId;
         this.collectionName = collectionName;
         this.albumName = albumName;
         this.artistName = artistName;
