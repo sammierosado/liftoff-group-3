@@ -23,7 +23,7 @@ function App() {
           <Route path="/likedsongs" element={<LikedSongsPage />} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/logout" element={<Logout />} />
+          <Route path="/logout" element={<Logout />} />   
           <Route path="/user" element={<UserProfile />} />
           <Route path="/randompage" element={<RandomMusicPage />} />
           <Route path="/collections" element={<CollectionPage />} />
