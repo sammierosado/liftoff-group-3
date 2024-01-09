@@ -6,7 +6,7 @@ import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotBlank;
 
 @Entity
-public class Collection {
+public class UserCollection {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -18,6 +18,9 @@ public class Collection {
     public String albumName;
     @NotBlank
     public String artistName;
+
+    @NotBlank
+    public String username;
 
     public Long getId() {
         return id;
@@ -59,13 +62,13 @@ public class Collection {
         this.artistName = artistName;
     }
 
-    public Collection(Long id, String collection, String collectionName, String albumName, String artistName) {
+    public UserCollection(Long id, String collection, String collectionName, String albumName, String artistName) {
         this.id = id;
         this.collection = collection;
         this.collectionName = collectionName;
         this.albumName = albumName;
         this.artistName = artistName;
     }
-    public Collection() {
+    public UserCollection() {
     }
 }
