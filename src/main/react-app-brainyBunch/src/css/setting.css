@@ -33,3 +33,23 @@
     padding: 0 0.75rem;
     margin: 0;
 }
+.toggle {
+    cursor: pointer;
+    display: inline-block;
+}
+
+.toggleSwitch {
+    display: inline-block;
+    background: #28292c;
+    border-radius: 16px;
+    width: 58px;
+    height: 32px;
+    position: relative;
+    vertical-align: middle;
+    transition: background 0.25s;
+}
+
+.toggleCheckbox {
+    position: absolute;
+    visibility: hidden;
+}

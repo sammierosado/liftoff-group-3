@@ -21,6 +21,12 @@ const Setting = () => {
     setCheckedValue(event.target.checked);
   };
 
+  useEffect(() => {
+    var bodyClasses = darkMode === 'true' ? 'dark' : '';
+    document.body.className = bodyClasses;
+  });
+
+
   return (
     <div>
         <Navigation/>
