@@ -3,15 +3,13 @@ import brainyBunch.liftoffgroup3.model.repository.StampRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.Model;
 import brainyBunch.liftoffgroup3.models.stamp;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
 import java.lang.Iterable;
+import brainyBunch.liftoffgroup3.models.StampForm;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -32,13 +30,13 @@ public class StampController {
     }
 
     @PostMapping("/stamps/save")
-    public ResponseEntity<?> saveTimestamp() {
+    public ResponseEntity<?> saveTimestamp(@RequestBody StampForm form) {
         // Create a new stamp object
         stamp newStamp = new stamp();
 
         // Set necessary properties
         newStamp.setStampTime(LocalDateTime.now());
-        newStamp.setActionDescription("Some action description"); // Replace with actual action description
+        newStamp.setActionDescription(form.getActionDescription()); // Get description from StampForm object
 
         // Optionally, add other properties as needed
         // ...
