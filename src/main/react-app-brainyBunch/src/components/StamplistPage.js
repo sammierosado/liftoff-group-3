@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Navigation from "./Navigation";
+import "../css/stamppage.css";
 
 function StamplistPage() {
   const [stamps, setStamps] = useState([]);
@@ -56,7 +57,13 @@ function StamplistPage() {
   return (
     <div>
       <Navigation />
+      <br></br>
+      <br></br>
+      <br></br>
       <h1>Stamp List</h1>
+      <button onClick={() => createTimestampWithDescription("Action 1")}>Action 1</button>
+      <button onClick={() => createTimestampWithDescription("Action 2")}>Action 2</button>
+      {/* Add more buttons for other actions as needed */}
       {error && <div className="error">{error}</div>}
       {isLoading ? (
         <div>Loading stamps...</div>
@@ -86,9 +93,7 @@ function StamplistPage() {
           </tbody>
         </table>
       )}
-      <button onClick={() => createTimestampWithDescription("Action 1")}>Action 1</button>
-      <button onClick={() => createTimestampWithDescription("Action 2")}>Action 2</button>
-      {/* Add more buttons for other actions as needed */}
+
     </div>
   );
 }
