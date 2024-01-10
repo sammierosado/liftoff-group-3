@@ -125,15 +125,13 @@ function UserProfile() {
 
   return (
     <div>
-       <div>
-          <div>
-            <Navigation />
-          </div>
+      <div>
+        <div>
+          <Navigation />
         </div>
+      </div>
       <div className="userProfile-nav">
         <h2>Welcome! {username}</h2>
-
-       
       </div>
       <div className="img-div">
         <div className="w50">
@@ -161,7 +159,7 @@ function UserProfile() {
             )}
           </h2>
           {!isEditEnable && (
-            <table>
+            <table className="align">
               <tbody>
                 <tr>
                   <td>Username: </td>
