@@ -9,7 +9,7 @@ import java.util.List;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/api/save-song")
+@RequestMapping("/api/song")
 public class SongController {
 
     private final CollectionRepository collectionRepository;
@@ -24,4 +24,6 @@ public class SongController {
         collectionRepository.save(collection);
     }
 
+    @DeleteMapping("/delete/{songId}")
+    public void deleteSong(@PathVariable Long songId) { collectionRepository.deleteById(songId); }
 }
