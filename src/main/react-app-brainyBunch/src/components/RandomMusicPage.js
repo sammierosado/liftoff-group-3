@@ -90,13 +90,21 @@ function RandomMusicPage() {
               <button onClick={() => handleLike(i)}>
                 {album.liked ? "Unlike" : "Like"}
               </button>
-              <button
-                className="CollectionButton"
-                type="button"
-                onClick={() => setSelectedAlbum(album)}
-              >
-                Add to collection
-              </button>
+              <form>
+                <label for="userCollections">Choose a collection:</label>
+                <select name="collections" id="collections">
+                  <option value="test">Test</option>
+                  <option value="test">Test</option>
+                  <option value="test">Test</option>
+                  <option value="test">Test</option>
+                </select>
+                <br />
+                <input
+                  type="submit"
+                  value="Submit"
+                  onClick={() => handleAddToCollection()}
+                />
+              </form>
             </div>
           </div>
         ))}
