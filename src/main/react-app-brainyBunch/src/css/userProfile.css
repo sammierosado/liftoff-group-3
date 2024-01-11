@@ -3,6 +3,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-top: 5rem;
 }
 
 .w50 {
@@ -13,4 +14,14 @@
 .editIcon {
   padding-left: 30px;
 }
-
+.img-div {
+  padding-left: 30px;
+}
+.profile_image {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+}
+.align {
+  margin-left: 10px;
+}

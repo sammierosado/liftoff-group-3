@@ -1,0 +1,32 @@
+table {
+    table-layout: auto; /* Default value, allows cells to stretch */
+  }
+table {
+    margin: 0 auto;
+    text-align: center; /* Optional: center cell content within the table */
+  }
+
+table tr td {
+    border: 1px solid #ddd;
+  }
+  table tr:nth-child(odd) {
+    background-color: #f5f5f5;
+  }
+  
+  table tr:nth-child(even) {
+    background-color: #e0e0e0;
+  }
+  td, th {
+    width: auto; /* Allow cells to adjust width based on content */
+    white-space: normal; /* Enable text wrapping */
+    word-wrap: break-word; /* Break long words if needed */
+  }
+  table {
+    border: 5px solid #56595e;
+    border-radius: 3px; /* Modify 3px for the desired corner radius */
+  }
+  
+  table tr td, table tr th {
+    border: 5px solid #bfc0c1;
+    border-radius: 3px; /* Apply to individual cells if needed */
+  }

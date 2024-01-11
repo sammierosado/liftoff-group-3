@@ -1,7 +1,20 @@
-.time-display {
-    display: block;
-  }
-  
-  button:active + .time-display {
-    display: none;
-  }
+/* Robert 01/07 This code was commented out for creating a 
+conflict with the HomePage.js/Navigation.js text.
+it was old css code meant for improving the look of 
+the automated clock.  That feature will be transfered to 
+the home page. */
+
+/* .time-display {
+  display: block;
+}
+
+button:active + .time-display {
+  display: none;
+}
+
+span{
+  background-image: linear-gradient(to right, #f79d73, #e84e5c);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 35px;
+} */

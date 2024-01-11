@@ -3,21 +3,52 @@ import "../css/userProfile.css";
 import { CgProfile } from "react-icons/cg";
 import Navigation from "./Navigation";
 import { MdEdit } from "react-icons/md";
+import { json } from "react-router-dom";
 
 function UserProfile() {
   const [errorMessage, setErrorMessage] = useState("");
   const [isLoading, setIsLoading] = useState(true);
+  const [imageSource, setImageSource] = useState();
   const username = localStorage.getItem("username");
   const [user, setUser] = useState({});
-  const [editData, setEditData] = useState({ user });
-
   const [isEditEnable, setIsEditEnable] = useState(false);
-
   const [file, setFile] = useState();
+  const [selectedFile, setSelectedFile] = useState(null);
 
-  const handleImageUpload = (e) => {
-    console.log(e.target.files);
-    setFile(URL.createObjectURL(e.target.files[0]));
+  const handleFileChange = (e) => {
+    setSelectedFile(e.target.files[0]);
+  };
+
+  const handleImageUpload = () => {
+    if (selectedFile) {
+      const formData = new FormData();
+      formData.append("image", selectedFile);
+      fetch("http://localhost:8080/uploadImage/" + username, {
+        method: "post",
+        body: formData,
+      })
+        .then((response) => response.text())
+        .then((message) => {
+          console.log(message);
+          window.location.reload(true);
+        })
+        .catch((error) => console.error("Error:", error));
+    }
+  };
+
+  const loadProfileImage = async () => {
+    const username = localStorage.getItem("username");
+    const response = await fetch(
+      `http://localhost:8080/profileImage/${username}`
+    );
+    if (!response.ok) {
+      setImageSource(null);
+    } else {
+      console.log(response);
+      const imageBlob = await response.blob();
+      const imageObjectURL = URL.createObjectURL(imageBlob);
+      setImageSource(imageObjectURL);
+    }
   };
 
   useEffect(() => {
@@ -45,7 +76,11 @@ function UserProfile() {
       }
     };
     userProfile();
-  }, []);
+
+    if (!imageSource) {
+      loadProfileImage();
+    }
+  }, [imageSource]);
 
   const saveData = async (e) => {
     e.preventDefault();
@@ -63,21 +98,15 @@ function UserProfile() {
       }
     );
 
-    const resdata = await response.json();
-    console.log(resdata.errorMessage);
+    const responseData = await response.json();
+    console.log(responseData.errorMessage);
     if (response.ok) {
       localStorage.setItem("username", user.username);
       document.location.href = "/user";
     } else {
-      setErrorMessage(resdata.errorMessage);
+      setErrorMessage(responseData.errorMessage);
     }
     setIsEditEnable(false);
-  };
-
-  const handleChange = (field, value) => {
-    let updatedUser = { ...user };
-    updatedUser[field] = value;
-    setUser(updatedUser);
   };
 
   const editProfileHandler = () => {
@@ -88,23 +117,37 @@ function UserProfile() {
     window.location.href = "/user";
   };
 
+  const handleChange = (field, value) => {
+    let updatedUser = { ...user };
+    updatedUser[field] = value;
+    setUser(updatedUser);
+  };
+
   return (
     <div>
-      <div className="userProfile-nav">
-        <h2>Welcome! {username}</h2>
-
+      <div>
         <div>
-          <div>
-            <Navigation />
-          </div>
+          <Navigation />
         </div>
       </div>
-      <div>
+      <div className="userProfile-nav">
+        <h2>Welcome! {username}</h2>
+      </div>
+      <div className="img-div">
         <div className="w50">
-          <CgProfile />
-          <h4>Upload Image:</h4>
-          <input type="file" onChange={handleImageUpload} />
+          {imageSource && (
+            <img
+              src={imageSource}
+              className="profile_image"
+              alt="Profile Photo"
+            />
+          )}
+          {!imageSource && <CgProfile />}
+          {imageSource && <h4>Change profile image</h4>}
+          {!imageSource && <h4>Upload Image:</h4>}
+          <input type="file" onChange={handleFileChange} />
           <img src={file} />
+          <button onClick={handleImageUpload}>Upload</button>
         </div>
         <div className="w50">
           <h2>
@@ -116,7 +159,7 @@ function UserProfile() {
             )}
           </h2>
           {!isEditEnable && (
-            <table>
+            <table className="align">
               <tbody>
                 <tr>
                   <td>Username: </td>

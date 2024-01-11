@@ -26,7 +26,7 @@ const Navigation = () => {
           )}
           {isLoggedIn && (
             <li>
-              <a href="/collections">Collections</a>
+              <a href="/collections">Collection</a>
             </li>
           )}
           {isLoggedIn && (
@@ -37,6 +37,11 @@ const Navigation = () => {
           {isLoggedIn && (
             <li>
               <a href="/search">Find Music</a>
+            </li>
+          )}
+          {isLoggedIn && (
+            <li>
+              <a href="/stamplist">Event History</a>
             </li>
           )}
           {isLoggedIn && (
