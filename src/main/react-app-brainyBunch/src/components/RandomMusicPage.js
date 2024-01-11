@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Routes, Route, Link } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import LikedSongsPage from "./LikedSongsPage";
-import CollectionPage from "./CollectionPage"; // Import CollectionPage
+import CollectionPage from "./CollectionPage";
 import "../css/randomPage.css";
 import "../css/girdLayout.css";
 
@@ -49,20 +49,38 @@ function RandomMusicPage() {
       );
   }
 
-  const handleLike = (index) => {
+  const handleLike = async (index) => {
     const updatedAlbums = [...albums];
     updatedAlbums[index].liked = !updatedAlbums[index].liked;
     setAlbums(updatedAlbums);
 
     if (updatedAlbums[index].liked) {
-      setLikedAlbums([...likedAlbums, updatedAlbums[index]]);
+        setLikedAlbums([...likedAlbums, updatedAlbums[index]]);
+
+        // Send a request to the backend to save the liked album
+        const { id, name, artists } = updatedAlbums[index];
+        const likedSong = {
+            id,
+            albumName: name,
+            artistName: artists[0].name,
+        };
+
+        await fetch("http://localhost:8080/api/liked-songs", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(likedSong),
+        });
     } else {
-      const filteredLikedAlbums = likedAlbums.filter(
-        (album) => album.id !== updatedAlbums[index].id
-      );
-      setLikedAlbums(filteredLikedAlbums);
+        const filteredLikedAlbums = likedAlbums.filter(
+            (album) => album.id !== updatedAlbums[index].id
+        );
+        setLikedAlbums(filteredLikedAlbums);
     }
   };
+
+
 
   const handleAddToCollection = () => {
     if (selectedAlbum) {

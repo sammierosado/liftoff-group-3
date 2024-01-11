@@ -1,4 +1,5 @@
 package brainyBunch.liftoffgroup3.model;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -7,15 +8,19 @@ import jakarta.validation.constraints.NotBlank;
 
 @Entity
 public class LikedSongs {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @NotBlank
-    public String likedSongs;
+    private String albumName;
+
     @NotBlank
-    public String albumName;
-    @NotBlank
-    public String artistName;
+    private String artistName;
+
+    public LikedSongs() {
+    }
 
     public Long getId() {
         return id;
@@ -25,13 +30,6 @@ public class LikedSongs {
         this.id = id;
     }
 
-    public String getLikedSongs() {
-        return likedSongs;
-    }
-
-    public void setLikedSongs(String likedSongs) {
-        this.likedSongs = likedSongs;
-    }
     public String getAlbumName() {
         return albumName;
     }
@@ -46,14 +44,5 @@ public class LikedSongs {
 
     public void setArtistName(String artistName) {
         this.artistName = artistName;
-    }
-
-    public LikedSongs(Long id, String likedSongs, String albumName, String artistName) {
-        this.id = id;
-        this.likedSongs = likedSongs;
-        this.albumName = albumName;
-        this.artistName = artistName;
-    }
-    public LikedSongs() {
     }
 }
