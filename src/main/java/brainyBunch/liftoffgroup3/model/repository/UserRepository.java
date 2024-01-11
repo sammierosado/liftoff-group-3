@@ -1,7 +1,6 @@
 package brainyBunch.liftoffgroup3.model.repository;
 
 import brainyBunch.liftoffgroup3.model.User;
-import brainyBunch.liftoffgroup3.model.UserProfileDTO;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
@@ -9,9 +8,4 @@ import java.util.Optional;
 public interface UserRepository extends JpaRepository<User,Long> {
     public Optional<User> findByEmail(String email);
     public Optional<User> findByUsername(String username);
-    //public Optional<User> findById(Long id);
-
-
-
-
 }
