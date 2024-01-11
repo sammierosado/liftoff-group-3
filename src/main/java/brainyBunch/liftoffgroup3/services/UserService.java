@@ -1,7 +1,7 @@
 package brainyBunch.liftoffgroup3.services;
 
 import brainyBunch.liftoffgroup3.model.User;
-import brainyBunch.liftoffgroup3.model.UserProfileDTO;
+import brainyBunch.liftoffgroup3.dto.UserProfileDTO;
 import org.springframework.web.multipart.MultipartFile;
 
 public interface UserService {

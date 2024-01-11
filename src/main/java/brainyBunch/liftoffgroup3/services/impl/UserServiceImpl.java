@@ -1,24 +1,22 @@
-package brainyBunch.liftoffgroup3.services;
+package brainyBunch.liftoffgroup3.services.impl;
 
 import brainyBunch.liftoffgroup3.exception.SpotifyException;
-import brainyBunch.liftoffgroup3.model.ErrorDTO;
 import brainyBunch.liftoffgroup3.model.User;
-import brainyBunch.liftoffgroup3.model.UserProfileDTO;
+import brainyBunch.liftoffgroup3.dto.UserProfileDTO;
 import brainyBunch.liftoffgroup3.model.repository.UserRepository;
+import brainyBunch.liftoffgroup3.services.UserService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.Base64;
 import java.util.Optional;
 
 @Service
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
 
