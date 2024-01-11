@@ -11,3 +11,15 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.fsSmall {
+  font-size: 12px;
+}
+
+.fsNormal {
+  font-size: 16px;
+}
+
+.fsBig {
+  font-size: 20px;
+}
