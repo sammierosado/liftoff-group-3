@@ -51,34 +51,37 @@ function RandomMusicPage() {
 
   const handleLike = async (index) => {
     const updatedAlbums = [...albums];
-    updatedAlbums[index].liked = !updatedAlbums[index].liked;
+    const likedAlbum = updatedAlbums[index];
+    likedAlbum.liked = !likedAlbum.liked;
     setAlbums(updatedAlbums);
-
-    if (updatedAlbums[index].liked) {
-        setLikedAlbums([...likedAlbums, updatedAlbums[index]]);
-
-        // Send a request to the backend to save the liked album
-        const { id, name, artists } = updatedAlbums[index];
-        const likedSong = {
-            id,
-            albumName: name,
-            artistName: artists[0].name,
-        };
-
+  
+    if (likedAlbum.liked) {
+      setLikedAlbums((prevLikedAlbums) => [...prevLikedAlbums, likedAlbum]);
+  
+      // Pull the song title and artist information if tracks is defined
+      if (likedAlbum.tracks) {
+        const { id, name, tracks } = likedAlbum;
+        const likedSongs = tracks.map((track) => ({
+          albumId: id,
+          albumName: name,
+          artistName: track.artists[0].name,
+          songTitle: track.name,
+        }));
+  
+        // Send a request to the backend to save the liked songs
         await fetch("http://localhost:8080/api/liked-songs", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(likedSong),
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(likedSongs),
         });
+      }
     } else {
-        const filteredLikedAlbums = likedAlbums.filter(
-            (album) => album.id !== updatedAlbums[index].id
-        );
-        setLikedAlbums(filteredLikedAlbums);
+      // Can add unlike if wanted later
     }
   };
+  
 
 
 
