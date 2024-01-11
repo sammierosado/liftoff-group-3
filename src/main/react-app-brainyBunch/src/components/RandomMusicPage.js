@@ -81,7 +81,11 @@ function RandomMusicPage() {
       <div>
         {albums.map((album, i) => (
           <div className="RandomCard" key={i}>
-            <img src={album.images[0].url} alt="alt text" />
+            <img
+              src={album.images[0].url}
+              alt="alt text"
+              className="randomImg"
+            />
             <div className="container">
               <h4>
                 <b>{album.name}</b>
