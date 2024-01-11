@@ -1,0 +1,17 @@
+.GridRandomImg {
+    border-radius: 5px 5px 0 0;
+    width: 300x;
+    height: 100px; 
+    
+  }
+
+.GridRandomCard {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    transition: 0.3s;
+    border-radius: 25px;
+    width: 300px;
+    margin-left: 10px;
+    margin-bottom: 10px;
+    background-color: white;
+    display: inline-grid;
+ }
