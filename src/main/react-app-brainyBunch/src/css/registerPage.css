@@ -23,6 +23,10 @@
   background-color: purple;
   color: white;
   border: none;
+  margin-top: 1rem;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  font-weight: bold;
 }
 
 .user-form {
