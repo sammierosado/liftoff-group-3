@@ -101,8 +101,19 @@ const CollectionPage = ({ onAddSong }) => {
       {userCollection &&
         userCollection.map((collection) => {
           return (
-            <div className="container">
-              <h4>{collection.collectionName}</h4>
+            <div
+              className="card"
+              onClick={() => {
+                console.log("click");
+              }}
+            >
+              <img src="userCollection.avif" alt="User" className="img"></img>
+              <div className="container">
+                <a href="/rockpage" id="special">
+                  {collection.collectionName}
+                </a>
+              </div>
+              <p>User Collection</p>
             </div>
           );
         })}
