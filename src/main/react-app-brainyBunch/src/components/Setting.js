@@ -1,70 +1,82 @@
 import React, { useEffect, useState } from "react";
 import Navigation from "./Navigation";
+
 import "../css/setting.css";
 
-const Setting = () => {
+const Settings = () => {
   const darkMode = localStorage.getItem("spotify-mode");
-
   const fontSize = localStorage.getItem("spotify-font-size");
 
-  const [isFontSize, setIsFontSize] = useState(fontSize);
-  const [checkedValue, setCheckedValue] = useState(
-    isFontSize ? isFontSize : "fsNormal"
+  const [themeCheckedValue, setThemeCheckedValue] = useState(
+    darkMode === "dark" ? "dark" : "light"
   );
-  const [isDarkMode, setIsDarkMode] = useState(darkMode);
-  const [modeCheckedValue, setModeCheckedValue] = useState(
-    isDarkMode === "true" ? "dark" : "light"
+  const [styleCheckedValue, setStyleCheckedValue] = useState(
+    fontSize ? fontSize : "fsNormal"
   );
 
+  const themeHandler = (event) => {
+    localStorage.setItem("spotify-mode", event.target.value);
+
+    setThemeCheckedValue(event.target.value);
+  };
+
+  const fontSizeHandler = (event) => {
+    localStorage.setItem("spotify-font-size", event.target.value);
+
+    setStyleCheckedValue(event.target.value);
+  };
+
   useEffect(() => {
-    var bodyClasses = darkMode === "true" ? "dark" : "";
-    bodyClasses = bodyClasses + " " + (fontSize ? isFontSize : "fsNormal");
+    var bodyClasses =
+      (darkMode === "light" ? "" : "dark") +
+      " " +
+      (fontSize ? fontSize : "fsNormal");
 
     document.body.className = bodyClasses;
   });
 
-  const fontSizeHandler = (event) => {
-    console.log(event.target.value);
-    localStorage.setItem("spotify-font-size", event.target.value);
-
-    var bodyClasses = darkMode === "true" ? "dark" : "";
-    bodyClasses = bodyClasses + " " + event.target.value;
-
-    setCheckedValue(event.target.value);
-
-    setIsFontSize(event.target.value);
-  };
-
-  const modeHandler = (event) => {
-    setIsDarkMode(event.target.value === "dark");
-
-    if (event.target.checked) {
-      localStorage.setItem("spotify-mode", event.target.value);
-
-      var bodyClasses = fontSize ? fontSize : "fsNormal";
-      bodyClasses = bodyClasses + " " + event.target.value;
-      document.body.className = bodyClasses;
-    } else {
-      localStorage.removeItem("spotify-mode");
-
-      document.body.className = fontSize ? fontSize : "fsNormal";
-    }
-
-    setModeCheckedValue(event.target.value);
-  };
-
   return (
-    <div>
+    <div className="settings">
       <Navigation />
-      <div className="settings">
-        <div className="radioGroup" onChange={fontSizeHandler}>
+      <div className="row">
+        <div className="setting-label">
+          <h2>Theme:</h2>
+        </div>
+        <div className="modeRadioGroup" onChange={themeHandler}>
+          <div className="light">
+            <input
+              type="radio"
+              id="theme-light"
+              name="theme"
+              value="light"
+              defaultChecked={themeCheckedValue === "light"}
+            />
+            <label htmlFor="theme-light">Light</label>
+          </div>
+          <div className="dark">
+            <input
+              type="radio"
+              id="theme-dark"
+              name="theme"
+              value="dark"
+              defaultChecked={themeCheckedValue === "dark"}
+            />
+            <label htmlFor="theme-dark">Dark</label>
+          </div>
+        </div>
+      </div>
+      <div className="row">
+        <div className="setting-label">
+          <h2>Style:</h2>
+        </div>
+        <div className="fontRadioGroup" onChange={fontSizeHandler}>
           <div className="small">
             <input
               type="radio"
               id="option-one"
-              name="selector"
+              name="fontStyle"
               value="fsSmall"
-              checked={checkedValue === "fsSmall"}
+              defaultChecked={styleCheckedValue === "fsSmall"}
             />
             <label htmlFor="option-one">A-</label>
           </div>
@@ -72,49 +84,21 @@ const Setting = () => {
             <input
               type="radio"
               id="option-two"
-              name="selector"
+              name="fontStyle"
               value="fsNormal"
-              checked={checkedValue === "fsNormal"}
+              defaultChecked={styleCheckedValue === "fsNormal"}
             />
-            <label htmlFor="option-two">A</label>
+            <label htmlFor="option-two">A </label>
           </div>
           <div className="big">
             <input
               type="radio"
               id="option-three"
-              name="selector"
+              name="fontStyle"
               value="fsBig"
-              checked={checkedValue === "fsBig"}
+              defaultChecked={styleCheckedValue === "fsBig"}
             />
-            <label htmlFor="option-three" className="big">
-              A+
-            </label>
-          </div>
-        </div>
-        <hr />
-        {/* // theme  changes*/}
-        <div className="modeRadioGroup" onChange={modeHandler}>
-          <div className="light">
-            <input
-              type="radio"
-              id="mode-light"
-              name="selector"
-              value="light"
-              checked={modeCheckedValue === "light"}
-            />
-            <label htmlFor="mode-light">Light</label>
-          </div>
-          <div className="dark">
-            <input
-              type="radio"
-              id="mode-dark"
-              name="selector"
-              value="dark"
-              checked={modeCheckedValue === "dark"}
-            />
-            <label htmlFor="mode-dark" className="dark">
-              Dark
-            </label>
+            <label htmlFor="option-three">A+</label>
           </div>
         </div>
       </div>
@@ -122,4 +106,4 @@ const Setting = () => {
   );
 };
 
-export default Setting;
+export default Settings;

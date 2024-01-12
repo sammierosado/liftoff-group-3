@@ -1,56 +1,65 @@
 .settings {
-    width: 90%;
-    max-width: 40rem;
-    margin: 2rem auto;
-    padding: 2rem;
-    margin-top: 80px;
+  width: 90%;
+  max-width: 40rem;
+  margin: 2rem auto;
+  padding: 2rem;
+  border: 1px solid #eee;
 }
 
-.row {
-    margin: 1rem 0;
-    display: flex;
-    align-items: center;
-    /* flex-direction: column; */
+.settings .row {
+  margin: 1rem 0 2rem;
+  padding: 0 1rem 0.75rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #eee;
 }
 
-.row .label,
-.row .value {
-    display: block;
+.settings .row:last-child {
+  border-bottom: none;
 }
 
-.row .label {
-    flex: 1;
-    font-weight: bold;
+.settings .row .label,
+.settings .row .value {
+  display: block;
 }
 
-.row .value {
-    flex: 3;
-    padding: 0.35rem 0.35rem;
+.settings .row .label {
+  flex: 1;
+  font-weight: bold;
 }
 
-.optionText {
-    font-size: 12px;
-    font-weight: bold;
-    padding: 0 0.75rem;
-    margin: 0;
-}
-.toggle {
-    cursor: pointer;
-    display: inline-block;
+.settings .row .value {
+  flex: 3;
+  padding: 0.35rem 0.35rem;
 }
 
-.toggleSwitch {
-    display: inline-block;
-    background: #28292c;
-    border-radius: 16px;
-    width: 58px;
-    height: 32px;
-    position: relative;
-    vertical-align: middle;
-    transition: background 0.25s;
+.settings .modeRadioGroup,
+.settings .fontRadioGroup {
+  display: inline-flex;
+  align-items: center;
 }
 
-.toggleCheckbox {
-    position: absolute;
-    visibility: hidden;
+.settings .modeRadioGroup div,
+.settings .fontRadioGroup div {
+  padding: 0.5rem 1rem;
+}
+
+.settings .fontRadioGroup .small {
+  font-size: 12px;
+}
+
+.settings .fontRadioGroup .normal {
+  font-size: 16px;
+}
+
+.settings .fontRadioGroup .big {
+  font-size: 20px;
+}
+
+.settings .optionText {
+  font-size: 12px;
+  font-weight: bold;
+  padding: 0 0.75rem;
+  margin: 0;
 }
