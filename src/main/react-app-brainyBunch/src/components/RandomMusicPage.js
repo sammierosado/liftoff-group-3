@@ -225,9 +225,9 @@ function RandomMusicPage() {
                     </select>
                     <br />
                     <input
-                      type="submit"
+                      type="button"
                       value="Submit"
-                      onClick={() => handleAddToCollection()}
+                      onClick={() => handleAddToCollection(album)}
                     />
                   </form>
                 </div>
