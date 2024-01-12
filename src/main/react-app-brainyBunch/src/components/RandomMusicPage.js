@@ -112,7 +112,7 @@ function RandomMusicPage() {
     const requestBody = {
       username: username,
       albumName: selectedAlbum.name,
-      artists: selectedAlbum.artists.map((artist) => artist.name),
+      artists: selectedAlbum.artists[0].name,
       collectionName: selectedCollection || collectionValues[0].collectionName,
     };
     const response = await fetch("http://localhost:8080/api/song", {
