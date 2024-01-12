@@ -5,6 +5,9 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotBlank;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 public class Collection {
     @Id
@@ -16,8 +19,11 @@ public class Collection {
     public String collectionName;
     @NotBlank
     public String albumName;
+
+    public List<String> artists = new ArrayList<>();
+
     @NotBlank
-    public String artistName;
+    public String username;
 
     public Long getId() {
         return id;
@@ -51,21 +57,31 @@ public class Collection {
         this.albumName = albumName;
     }
 
-    public String getArtistName() {
-        return artistName;
+    public List<String> getArtists() {
+        return artists;
     }
 
-    public void setArtistName(String artistName) {
-        this.artistName = artistName;
+    public void setArtists(List<String> artists) {
+        this.artists = artists;
     }
 
-    public Collection(Long id, String collectionName, String albumName, String artistName) {
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public Collection(Long id, String collectionName, String albumName, List<String> artists, String username) {
 //    public Collection(Long id, String userId, String collectionName, String albumName, String artistName) {
         this.id = id;
 //        this.userId = userId;
         this.collectionName = collectionName;
         this.albumName = albumName;
-        this.artistName = artistName;
+        this.artists = artists;
+        this.username = username;
+
     }
     public Collection() {
     }

@@ -3,7 +3,10 @@ import { Routes, Route } from "react-router-dom";
 import LikedSongsPage from "./LikedSongsPage";
 import CollectionPage from "./CollectionPage";
 import "../css/randomPage.css";
-import "../css/girdLayout.css";
+
+import "../css/gridLayout.css";
+
+
 
 const CLIENT_ID = "2c8d20f72c914fe79dfd499fb8f9644e";
 const CLIENT_SECRET = "9ba9d68e457a43aea82a41d0114e9aa8";
@@ -14,6 +17,13 @@ function RandomMusicPage() {
   const [likedAlbums, setLikedAlbums] = useState([]);
   const [selectedAlbum, setSelectedAlbum] = useState(null);
   const [styleSelected, setStyleSelected] = useState("column");
+
+
+  const username = localStorage.getItem("username");
+  const [collectionValues, setCollectionValues] = useState([]);
+  const [isDisable, setIsDisable] = useState(true);
+  const [selectedCollection, setSelectedCollection] = useState("");
+
 
   useEffect(() => {
     var authParameters = {
@@ -30,6 +40,21 @@ function RandomMusicPage() {
     fetch("https://accounts.spotify.com/api/token", authParameters)
       .then((result) => result.json())
       .then((data) => setAccessToken(data.access_token));
+
+    const collectionValues = async () => {
+      const response = await fetch(
+        "http://localhost:8080/collections/" + username,
+        {
+          method: "get",
+          headers: { "Content-Type": "application/json" },
+        }
+      );
+
+      const collectionData = await response.json();
+      setCollectionValues(collectionData);
+      console.log(collectionData);
+    };
+    collectionValues();
   }, []);
 
   async function search() {
@@ -54,10 +79,11 @@ function RandomMusicPage() {
     const likedAlbum = updatedAlbums[index];
     likedAlbum.liked = !likedAlbum.liked;
     setAlbums(updatedAlbums);
-  
-    if (likedAlbum.liked) {
+
+
+   if (likedAlbum.liked) {
       setLikedAlbums((prevLikedAlbums) => [...prevLikedAlbums, likedAlbum]);
-  
+
       // Pull the song title and artist information if tracks is defined
       if (likedAlbum.tracks) {
         const { id, name, tracks } = likedAlbum;
@@ -67,7 +93,7 @@ function RandomMusicPage() {
           artistName: track.artists[0].name,
           songTitle: track.name,
         }));
-  
+
         // Send a request to the backend to save the liked songs
         await fetch("http://localhost:8080/api/liked-songs", {
           method: "POST",
@@ -85,13 +111,28 @@ function RandomMusicPage() {
 
 
 
-  const handleAddToCollection = () => {
-    if (selectedAlbum) {
-      // Add the selected album to the user's collection
-      console.log("Added to collection:", selectedAlbum);
-      // Clear the selected album
-      setSelectedAlbum(null);
-    }
+  //set selected value in dropdown change
+  const handleCollectionChange = (e) => {
+    setSelectedCollection(e.target.value);
+  };
+  // add to collection post data into db.
+  const handleAddToCollection = async (selectedAlbum) => {
+    const requestBody = {
+      username: username,
+      albumName: selectedAlbum.name,
+      artists: selectedAlbum.artists.map((artist) => artist.name),
+      collectionName: selectedCollection || collectionValues[0].collectionName,
+    };
+    const response = await fetch("http://localhost:8080/api/song", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(requestBody),
+    });
+
+    // Add the selected album to the user's collection
+    console.log("Added to collection:", selectedAlbum);
+    // Clear the selected album
+    setSelectedAlbum(null);
   };
 
   return (
@@ -131,17 +172,26 @@ function RandomMusicPage() {
                 </button>
                 <form>
                   <label for="userCollections">Choose a collection:</label>
-                  <select name="collections" id="collections">
-                    <option value="test">Test</option>
-                    <option value="test">Test</option>
-                    <option value="test">Test</option>
-                    <option value="test">Test</option>
+
+                  <select
+                    name="collections"
+                    id="collections"
+                    onChange={handleCollectionChange}
+                  >
+                    {collectionValues.length > 0 &&
+                      collectionValues.map((value) => (
+                        <option key={value.id}>{value.collectionName}</option>
+                      ))}
+                    {!collectionValues.length === 0 && (
+                      <option>No collection found</option>
+                    )}
                   </select>
                   <br />
                   <input
-                    type="submit"
+                    type="button"
                     value="Submit"
-                    onClick={() => handleAddToCollection()}
+                    onClick={() => handleAddToCollection(album)}
+
                   />
                 </form>
               </div>
@@ -168,11 +218,20 @@ function RandomMusicPage() {
                   </button>
                   <form>
                     <label for="userCollections">Choose a collection:</label>
-                    <select name="collections" id="collections">
-                      <option value="test">Test</option>
-                      <option value="test">Test</option>
-                      <option value="test">Test</option>
-                      <option value="test">Test</option>
+
+                    <select
+                      name="collections"
+                      id="collections"
+                      onChange={handleCollectionChange}
+                    >
+                      {collectionValues.length > 0 &&
+                        collectionValues.map((value) => (
+                          <option key={value.id}>{value.collectionName}</option>
+                        ))}
+                      {!collectionValues.length === 0 && (
+                        <option>No collection found</option>
+                      )}
+
                     </select>
                     <br />
                     <input
@@ -187,6 +246,7 @@ function RandomMusicPage() {
           ))}
         </div>
       )}
+
       <div>
         {/* Uncomment this link when you have a LikedSongsPage component */}
         {/* <Link to="/likedsongs">Go to Liked Songs</Link> */}
