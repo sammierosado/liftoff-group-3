@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Routes, Route, Link } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import LikedSongsPage from "./LikedSongsPage";
 import CollectionPage from "./CollectionPage";
 import "../css/randomPage.css";
+
 import "../css/gridLayout.css";
 
 const CLIENT_ID = "2c8d20f72c914fe79dfd499fb8f9644e";
@@ -19,7 +20,6 @@ function RandomMusicPage() {
   const [collectionValues, setCollectionValues] = useState([]);
   const [isDisable, setIsDisable] = useState(true);
   const [selectedCollection, setSelectedCollection] = useState("");
-  const [isLikedSongsVisible, setLikedSongsVisible] = useState(false);
 
   useEffect(() => {
     var authParameters = {
@@ -48,6 +48,7 @@ function RandomMusicPage() {
 
       const collectionData = await response.json();
       setCollectionValues(collectionData);
+      console.log(collectionData);
     };
     collectionValues();
   }, []);
@@ -69,34 +70,49 @@ function RandomMusicPage() {
       );
   }
 
-  const handleAddToLikedSongs = async (selectedAlbum) => {
-    const requestBody = {
-      username: username,
-      albumName: selectedAlbum.name,
-      artists: selectedAlbum.artists.map((artist) => artist.name),
-      // collectionName: selectedCollection || collectionValues[0].collectionName,
-    };
-    const response = await fetch("http://localhost:8080/api/song", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(requestBody),
-    });
+  const handleLike = async (index) => {
+    const updatedAlbums = [...albums];
+    const likedAlbum = updatedAlbums[index];
+    likedAlbum.liked = !likedAlbum.liked;
+    setAlbums(updatedAlbums);
 
-    // Add the selected album to the user's collection
-    console.log("Added to Liked Songs:", selectedAlbum);
-    setSelectedAlbum(null);
+    if (likedAlbum.liked) {
+      setLikedAlbums((prevLikedAlbums) => [...prevLikedAlbums, likedAlbum]);
+
+      // Pull the song title and artist information if tracks is defined
+      if (likedAlbum.tracks) {
+        const { id, name, tracks } = likedAlbum;
+        const likedSongs = tracks.map((track) => ({
+          albumId: id,
+          albumName: name,
+          artistName: track.artists[0].name,
+          songTitle: track.name,
+        }));
+
+        // Send a request to the backend to save the liked songs
+        await fetch("http://localhost:8080/api/liked-songs", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(likedSongs),
+        });
+      }
+    } else {
+      // Can add unlike if wanted later
+    }
   };
 
-  // const handleLikedSongsChange = (e) => {
-  //   setSelectedAlbum(e.target.value);
-  // };
-
-
+  //set selected value in dropdown change
+  const handleCollectionChange = (e) => {
+    setSelectedCollection(e.target.value);
+  };
+  // add to collection post data into db.
   const handleAddToCollection = async (selectedAlbum) => {
     const requestBody = {
       username: username,
       albumName: selectedAlbum.name,
-      artists: selectedAlbum.artists[0].name,
+      artist: selectedAlbum.artists[0].name,
       collectionName: selectedCollection || collectionValues[0].collectionName,
     };
     const response = await fetch("http://localhost:8080/api/song", {
@@ -107,17 +123,14 @@ function RandomMusicPage() {
 
     // Add the selected album to the user's collection
     console.log("Added to collection:", selectedAlbum);
+    // Clear the selected album
     setSelectedAlbum(null);
-  };
-
-  const handleCollectionChange = (e) => {
-    setSelectedCollection(e.target.value);
   };
 
   return (
     <div className="RandomMusicPage">
       <form>
-        <label htmlFor="style">Choose a style:</label>
+        <label for="style">Choose a style:</label>
         <select
           id="style"
           name="style"
@@ -132,19 +145,6 @@ function RandomMusicPage() {
           Search for popular new albums!
         </button>
       </div>
-
-      {/* Liked Songs Section */}
-      <div>
-          <ul>
-            {likedAlbums.map((album) => (
-              <li key={album.id}>
-                {album.name} by {album.artists[0].name}
-              </li>
-            ))}
-          </ul>
-      </div>
-
-      {/* Display Albums */}
       {styleSelected === "column" ? (
         <div>
           {albums.map((album, i) => (
@@ -159,11 +159,12 @@ function RandomMusicPage() {
                   <b>{album.name}</b>
                 </h4>
                 <p>{album.artists[0].name}</p>
-                <button onClick={() => handleAddToLikedSongs(album)}>
+                <button onClick={() => handleLike(i)}>
                   {album.liked ? "Unlike" : "Like"}
                 </button>
                 <form>
-                  <label htmlFor="userCollections">Choose a collection:</label>
+                  <label for="userCollections">Choose a collection:</label>
+
                   <select
                     name="collections"
                     id="collections"
@@ -203,11 +204,12 @@ function RandomMusicPage() {
                     <b>{album.name}</b>
                   </h4>
                   <p>{album.artists[0].name}</p>
-                  <button onClick={() => handleAddToLikedSongs(album)}>
+                  <button onClick={() => handleLike(i)}>
                     {album.liked ? "Unlike" : "Like"}
                   </button>
                   <form>
-                    <label htmlFor="userCollections">Choose a collection:</label>
+                    <label for="userCollections">Choose a collection:</label>
+
                     <select
                       name="collections"
                       id="collections"
