@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "../css/defaultPage.css";
+import Navigation from "./Navigation";
 
 const CLIENT_ID = "2c8d20f72c914fe79dfd499fb8f9644e";
 const CLIENT_SECRET = "9ba9d68e457a43aea82a41d0114e9aa8";
@@ -40,6 +41,12 @@ function RapDefaultPage() {
 
   return (
     <div className="RandomMusicPage">
+      <Navigation />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
       <div>
         <button className="RandomButton" type="button" onClick={searchGenre}>
           Display Rap Songs!
