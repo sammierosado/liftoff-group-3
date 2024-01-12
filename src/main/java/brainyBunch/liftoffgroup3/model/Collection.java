@@ -20,7 +20,7 @@ public class Collection {
     @NotBlank
     public String albumName;
 
-    public List<String> artists = new ArrayList<>();
+    public String artist;
 
     @NotBlank
     public String username;
@@ -57,12 +57,12 @@ public class Collection {
         this.albumName = albumName;
     }
 
-    public List<String> getArtists() {
-        return artists;
+    public String getArtists() {
+        return artist;
     }
 
-    public void setArtists(List<String> artists) {
-        this.artists = artists;
+    public void setArtists(String artist) {
+        this.artist = artist;
     }
 
     public String getUsername() {
@@ -79,7 +79,7 @@ public class Collection {
 //        this.userId = userId;
         this.collectionName = collectionName;
         this.albumName = albumName;
-        this.artists = artists;
+        this.artist = artist;
         this.username = username;
 
     }
