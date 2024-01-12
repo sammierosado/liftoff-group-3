@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import LikedSongsPage from "./LikedSongsPage";
 import CollectionPage from "./CollectionPage";
+import Navigation from "./Navigation";
 import "../css/randomPage.css";
 
 import "../css/gridLayout.css";
@@ -129,6 +130,12 @@ function RandomMusicPage() {
 
   return (
     <div className="RandomMusicPage">
+      <Navigation />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
       <form>
         <label for="style">Choose a style:</label>
         <select
