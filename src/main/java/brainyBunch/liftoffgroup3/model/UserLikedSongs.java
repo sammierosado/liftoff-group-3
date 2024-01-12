@@ -7,6 +7,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.LocalDateTime;
 
+@Entity
 public class UserLikedSongs {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
