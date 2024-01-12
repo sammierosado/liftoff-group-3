@@ -17,6 +17,7 @@ import ImagePage from "./components/ImagePage";
 import RockDefaultPage from "./components/RockDefaultPage";
 import JazzDefaultPage from "./components/JazzDefaultPage";
 import RapDefaultPage from "./components/RapDefualtPage";
+import Search from "./components/SearchMusic/Search";
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
           <Route path="/rockpage" element={<RockDefaultPage />} />
           <Route path="/jazzpage" element={<JazzDefaultPage />} />
           <Route path="/rappage" element={<RapDefaultPage />} />
+          <Route path="/search" element={<Search />} />
         </Routes>
       </div>
     </Router>

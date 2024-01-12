@@ -48,8 +48,12 @@ function JazzDefaultPage() {
       <div>
         {genreAlbums.map((track, i) => {
           return (
-            <div className="Card" key={i}>
-              <img src={track.album.images[0].url} alt="alt text" />
+            <div className="RandomCard" key={i}>
+              <img
+                src={track.album.images[0].url}
+                alt="alt text"
+                className="RandomImg"
+              />
               <div className="Container">
                 <h4>
                   <b>{track.name}</b>

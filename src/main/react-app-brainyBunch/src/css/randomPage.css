@@ -15,9 +15,10 @@
 }
 
   /* Add rounded corners to the top left and the top right corner of the image */
-  img {
+  .randomImg {
     border-radius: 5px 5px 0 0;
     width: 600px;
+    height: 600px; 
     
   }
   

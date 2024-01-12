@@ -1,9 +1,9 @@
 package brainyBunch.liftoffgroup3.controllers;
 
 import brainyBunch.liftoffgroup3.exception.SpotifyException;
-import brainyBunch.liftoffgroup3.model.ErrorDTO;
+import brainyBunch.liftoffgroup3.dto.ErrorDTO;
 import brainyBunch.liftoffgroup3.model.User;
-import brainyBunch.liftoffgroup3.model.UserProfileDTO;
+import brainyBunch.liftoffgroup3.dto.UserProfileDTO;
 import brainyBunch.liftoffgroup3.model.repository.UserRepository;
 import brainyBunch.liftoffgroup3.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,31 +54,6 @@ public class UserProfileController {
              return new ResponseEntity<>(updatedUser,HttpStatus.OK);
         }
     }
-
-//    @PostMapping("/uploadImage/{username}")
-//    public  ResponseEntity<Object> uploadUserProfileImage(@PathVariable String username, @RequestParam("file") MultipartFile file) throws IOException{
-//        if(!file.isEmpty()) {
-//            //save image bytes to a file
-//            Path filePath = Path.of("src/main/resources/images/" + file.getOriginalFilename());
-//            Files.write(filePath, file.getBytes());
-//
-//
-//            //generate url for the saved file.
-//            String fileDownloadUri = ServletUriComponentsBuilder.fromPath(filePath.toString())
-////                    .path("/download/")
-////                    .path(file.getOriginalFilename())
-//                    .toUriString();
-//            System.out.println("fileDownloadUri--------------------" + fileDownloadUri);
-//
-//            System.out.println("file:--------------" + file);
-//            userService.uploadProfileImageByUsername(username, fileDownloadUri);
-//            return new ResponseEntity<>(new ErrorDTO("Image uploaded successfully", HttpStatus.OK), HttpStatus.OK);
-//
-//         }else{
-//            return new ResponseEntity<>(new ErrorDTO("Failed to upload Image",HttpStatus.INTERNAL_SERVER_ERROR),HttpStatus.INTERNAL_SERVER_ERROR);
-//        }
-//    }
-
 
     @PostMapping("/uploadImage/{username}")
     public ResponseEntity<String> saveProfileImageToDatabaseByUsername(@PathVariable String username, @RequestParam("image") MultipartFile file) throws IOException {

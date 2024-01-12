@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Routes, Route, Link } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import LikedSongsPage from "./LikedSongsPage";
 import CollectionPage from "./CollectionPage";
 import "../css/randomPage.css";
+
 import "../css/gridLayout.css";
+
+
 
 const CLIENT_ID = "2c8d20f72c914fe79dfd499fb8f9644e";
 const CLIENT_SECRET = "9ba9d68e457a43aea82a41d0114e9aa8";
@@ -15,10 +18,12 @@ function RandomMusicPage() {
   const [selectedAlbum, setSelectedAlbum] = useState(null);
   const [styleSelected, setStyleSelected] = useState("column");
 
+
   const username = localStorage.getItem("username");
   const [collectionValues, setCollectionValues] = useState([]);
   const [isDisable, setIsDisable] = useState(true);
   const [selectedCollection, setSelectedCollection] = useState("");
+
 
   useEffect(() => {
     var authParameters = {
@@ -75,7 +80,8 @@ function RandomMusicPage() {
     likedAlbum.liked = !likedAlbum.liked;
     setAlbums(updatedAlbums);
 
-    if (likedAlbum.liked) {
+
+   if (likedAlbum.liked) {
       setLikedAlbums((prevLikedAlbums) => [...prevLikedAlbums, likedAlbum]);
 
       // Pull the song title and artist information if tracks is defined
@@ -101,6 +107,9 @@ function RandomMusicPage() {
       // Can add unlike if wanted later
     }
   };
+  
+
+
 
   //set selected value in dropdown change
   const handleCollectionChange = (e) => {
@@ -163,6 +172,7 @@ function RandomMusicPage() {
                 </button>
                 <form>
                   <label for="userCollections">Choose a collection:</label>
+
                   <select
                     name="collections"
                     id="collections"
@@ -181,6 +191,7 @@ function RandomMusicPage() {
                     type="button"
                     value="Submit"
                     onClick={() => handleAddToCollection(album)}
+
                   />
                 </form>
               </div>
@@ -207,6 +218,7 @@ function RandomMusicPage() {
                   </button>
                   <form>
                     <label for="userCollections">Choose a collection:</label>
+
                     <select
                       name="collections"
                       id="collections"
@@ -219,6 +231,7 @@ function RandomMusicPage() {
                       {!collectionValues.length === 0 && (
                         <option>No collection found</option>
                       )}
+
                     </select>
                     <br />
                     <input

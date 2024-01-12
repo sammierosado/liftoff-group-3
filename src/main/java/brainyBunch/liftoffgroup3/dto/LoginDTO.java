@@ -1,4 +1,4 @@
-package brainyBunch.liftoffgroup3.model;
+package brainyBunch.liftoffgroup3.dto;
 public class LoginDTO {
     private String username;
 

@@ -41,6 +41,11 @@ const Navigation = () => {
           )}
           {isLoggedIn && (
             <li>
+              <a href="/randompage">Find New Popular Tracks</a>
+            </li>
+          )}
+          {isLoggedIn && (
+            <li>
               <a href="/stamplist">Event History</a>
             </li>
           )}

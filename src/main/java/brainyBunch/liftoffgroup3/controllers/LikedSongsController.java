@@ -17,8 +17,17 @@ public class LikedSongsController {
         this.likedSongsRepository = likedSongsRepository;
     }
 
+//    @PostMapping
+//    public void addLikedSong(@RequestBody LikedSongs likedSong) {
+//        likedSongsRepository.save(likedSong);
+//    }
+
     @PostMapping
     public void addLikedSong(@RequestBody LikedSongs likedSong) {
+        System.out.println("Received Liked Song: " + likedSong.toString());
         likedSongsRepository.save(likedSong);
+        System.out.println("Liked Song saved successfully!");
     }
+
+
 }
