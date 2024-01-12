@@ -50,32 +50,34 @@ function Login() {
     <div className="login">
       <div className="login-form">
         <Navigation />
-        <h1>User Login</h1>
-        {errorMessage && <p className="error">{errorMessage}</p>}
-        <div className="username form-group">
-          <label for="username">Username </label>
-          <input
-            type="text"
-            value={username}
-            onChange={(e) => handleInputChange(e)}
-            id="username"
-            placeholder="username"
-          />
-        </div>
-        <div className="password form-group">
-          <label for="password">Password </label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => handleInputChange(e)}
-            id="password"
-            placeholder="Password"
-          />
-        </div>
-        <div className="footer">
-          <button onClick={loginUser} type="submit" className="login_btn">
-            Login
-          </button>
+        <div className="user-form">
+          <h1>User Login</h1>
+          {errorMessage && <p className="error">{errorMessage}</p>}
+          <div className="username form-group">
+            <label for="username">Username </label>
+            <input
+              type="text"
+              value={username}
+              onChange={(e) => handleInputChange(e)}
+              id="username"
+              placeholder="username"
+            />
+          </div>
+          <div className="password form-group">
+            <label for="password">Password </label>
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => handleInputChange(e)}
+              id="password"
+              placeholder="Password"
+            />
+          </div>
+          <div className="footer">
+            <button onClick={loginUser} type="submit" className="login_btn">
+              Login
+            </button>
+          </div>
         </div>
       </div>
     </div>

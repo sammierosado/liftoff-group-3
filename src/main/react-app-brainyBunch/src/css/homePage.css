@@ -1,6 +1,6 @@
 .homePage .nav {
   display: flex;
-  justify-content: space-between;
+  margin-right: 2rem;
   align-items: center;
 }
 

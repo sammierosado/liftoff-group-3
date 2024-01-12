@@ -146,7 +146,7 @@ function UserProfile() {
           {imageSource && <h4>Change profile image</h4>}
           {!imageSource && <h4>Upload Image:</h4>}
           <input type="file" onChange={handleFileChange} />
-          <img src={file} />
+
           <button onClick={handleImageUpload}>Upload</button>
         </div>
         <div className="w50">

@@ -1,5 +1,5 @@
 .login .login-form {
-  width: 250px;
+  width: 300px;
 }
 
 .login .login-form .form-group {
@@ -22,4 +22,8 @@
 
 .error {
   color: red;
+}
+.user-form {
+  margin-top: 6rem;
+  margin-left: 2rem;
 }

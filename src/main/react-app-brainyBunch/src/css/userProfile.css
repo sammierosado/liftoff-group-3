@@ -11,16 +11,20 @@
   float: left;
   height: 100%;
 }
-.editIcon {
+.img-div .editIcon svg {
+  height: 1.5rem;
+  width: 1.5rem;
   padding-left: 30px;
 }
 .img-div {
   padding-left: 30px;
 }
-.profile_image {
+img.profile_image,
+.img-div svg {
   width: 200px;
   height: 200px;
   border-radius: 50%;
+  float: initial;
 }
 .align {
   margin-left: 10px;
