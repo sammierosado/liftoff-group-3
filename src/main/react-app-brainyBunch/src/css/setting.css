@@ -1,0 +1,65 @@
+.settings {
+  width: 90%;
+  max-width: 40rem;
+  margin: 2rem auto;
+  padding: 2rem;
+  border: 1px solid #eee;
+}
+
+.settings .row {
+  margin: 1rem 0 2rem;
+  padding: 0 1rem 0.75rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #eee;
+}
+
+.settings .row:last-child {
+  border-bottom: none;
+}
+
+.settings .row .label,
+.settings .row .value {
+  display: block;
+}
+
+.settings .row .label {
+  flex: 1;
+  font-weight: bold;
+}
+
+.settings .row .value {
+  flex: 3;
+  padding: 0.35rem 0.35rem;
+}
+
+.settings .modeRadioGroup,
+.settings .fontRadioGroup {
+  display: inline-flex;
+  align-items: center;
+}
+
+.settings .modeRadioGroup div,
+.settings .fontRadioGroup div {
+  padding: 0.5rem 1rem;
+}
+
+.settings .fontRadioGroup .small {
+  font-size: 12px;
+}
+
+.settings .fontRadioGroup .normal {
+  font-size: 16px;
+}
+
+.settings .fontRadioGroup .big {
+  font-size: 20px;
+}
+
+.settings .optionText {
+  font-size: 12px;
+  font-weight: bold;
+  padding: 0 0.75rem;
+  margin: 0;
+}
