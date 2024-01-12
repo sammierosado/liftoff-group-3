@@ -15,6 +15,11 @@ import CollectionPage from "./components/CollectionPage";
 import StamplistPage from "./components/StamplistPage";
 import Setting from "./components/Setting";
 import ImagePage from "./components/ImagePage";
+import RockDefaultPage from "./components/RockDefaultPage";
+import JazzDefaultPage from "./components/JazzDefaultPage";
+import RapDefaultPage from "./components/RapDefualtPage";
+import Search from "./components/SearchMusic/Search";
+
 function App() {
   const darkMode = localStorage.getItem("spotify-mode");
   const fontSize = localStorage.getItem("spotify-font-size");
@@ -43,6 +48,11 @@ function App() {
           <Route path="/stamplist" element={<StamplistPage />} />
           <Route path="/setting" element={<Setting />} />
           <Route path="/imagepage" element={<ImagePage />} />
+          <Route path="/rockpage" element={<RockDefaultPage />} />
+          <Route path="/jazzpage" element={<JazzDefaultPage />} />
+          <Route path="/rappage" element={<RapDefaultPage />} />
+          <Route path="/search" element={<Search />} />
+
         </Routes>
       </div>
     </Router>
