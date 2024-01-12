@@ -58,58 +58,60 @@ function Register() {
     <div className="register">
       <div>
         <Navigation />
-        <h1>User Registration</h1>
-        {errorMessage && <p className="error">{errorMessage}</p>}
-        <div className="register-form">
-          <div className="username form-group">
-            <label for="username">Username </label>
-            <input
-              type="text"
-              value={user.username}
-              onChange={(e) => handleChange("username", e.target.value)}
-              id="username"
-              placeholder="Username"
-            />
-          </div>
-          <div className="pronoun form-group">
-            <label for="pronoun">Pronoun </label>
-            <select
-              className="select"
-              value={user.pronoun}
-              onChange={(e) => handleChange("pronoun", e.target.value)}
-              id="pronoun"
-              placeholder="Pronoun"
-            >
-              <option value="">Select</option>
-              <option value="he">He/His</option>
-              <option value="she">She/Her</option>
-              <option value="they">They/Them</option>
-            </select>
-          </div>
-          <div className="email form-group">
-            <label for="email">Email </label>
-            <input
-              type="text"
-              value={user.email}
-              onChange={(e) => handleChange("email", e.target.value)}
-              id="email"
-              placeholder="Email"
-            />
-          </div>
-          <div className="password form-group">
-            <label for="password">Password </label>
-            <input
-              type="password"
-              value={user.password}
-              onChange={(e) => handleChange("password", e.target.value)}
-              id="password"
-              placeholder="Password"
-            />
-          </div>
-          <div className="footer">
-            <button onClick={saveUser} type="submit" className="register_btn">
-              Register
-            </button>
+        <div className="user-form">
+          <h1>User Registration</h1>
+          {errorMessage && <p className="error">{errorMessage}</p>}
+          <div className="register-form">
+            <div className="username form-group">
+              <label for="username">Username </label>
+              <input
+                type="text"
+                value={user.username}
+                onChange={(e) => handleChange("username", e.target.value)}
+                id="username"
+                placeholder="Username"
+              />
+            </div>
+            <div className="pronoun form-group">
+              <label for="pronoun">Pronoun </label>
+              <select
+                className="select"
+                value={user.pronoun}
+                onChange={(e) => handleChange("pronoun", e.target.value)}
+                id="pronoun"
+                placeholder="Pronoun"
+              >
+                <option value="">Select</option>
+                <option value="he">He/His</option>
+                <option value="she">She/Her</option>
+                <option value="they">They/Them</option>
+              </select>
+            </div>
+            <div className="email form-group">
+              <label for="email">Email </label>
+              <input
+                type="text"
+                value={user.email}
+                onChange={(e) => handleChange("email", e.target.value)}
+                id="email"
+                placeholder="Email"
+              />
+            </div>
+            <div className="password form-group">
+              <label for="password">Password </label>
+              <input
+                type="password"
+                value={user.password}
+                onChange={(e) => handleChange("password", e.target.value)}
+                id="password"
+                placeholder="Password"
+              />
+            </div>
+            <div className="footer">
+              <button onClick={saveUser} type="submit" className="register_btn">
+                Register
+              </button>
+            </div>
           </div>
         </div>
       </div>
