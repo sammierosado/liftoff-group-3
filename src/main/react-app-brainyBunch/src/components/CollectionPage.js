@@ -7,6 +7,8 @@ const CollectionPage = ({ onAddSong }) => {
   const [collections, setCollections] = useState([]);
   const [userCollection, setUserCollection] = useState();
   const [newCollectionName, setNewCollectionName] = useState("");
+  const [userSongs, setUserSongs] = useState([]);
+  const [selectedCollection, setSelectedCollection] = useState("");
   const username = localStorage.getItem("username");
 
   useEffect(() => {
@@ -25,7 +27,20 @@ const CollectionPage = ({ onAddSong }) => {
       setUserCollection(collectionData);
       console.log(collectionData);
     };
+
+    const getSongs = async () => {
+      const response = await fetch("http://localhost:8080/api/song", {
+        method: "get",
+        headers: { "Content-Type": "application/json" },
+      });
+
+      const collectionData = await response.json();
+      setUserSongs(collectionData);
+      console.log(collectionData);
+    };
+
     userCollection();
+    getSongs();
   }, []);
 
   const saveCollection = async (collectionName) => {
@@ -101,19 +116,18 @@ const CollectionPage = ({ onAddSong }) => {
       {userCollection &&
         userCollection.map((collection) => {
           return (
-            <div
-              className="card"
-              onClick={() => {
-                console.log("click");
-              }}
-            >
+            <div className="card">
               <img src="userCollection.avif" alt="User" className="img"></img>
               <div className="container">
-                <a href="/rockpage" id="special">
-                  {collection.collectionName}
-                </a>
+                <button
+                  onClick={() => {
+                    setSelectedCollection(collection.collectionName);
+                  }}
+                >
+                  View Songs
+                </button>
               </div>
-              <p>User Collection</p>
+              <p>{collection.collectionName}</p>
             </div>
           );
         })}
@@ -160,6 +174,26 @@ const CollectionPage = ({ onAddSong }) => {
           </a>
           <p>Default Collection</p>
         </div>
+      </div>
+      <div className="songs">
+        {userSongs.map((song) => {
+          if (song.collectionName === selectedCollection) {
+            return (
+              <>
+                <table>
+                  <tr>
+                    <th>Artist</th>
+                    <th>Song</th>
+                  </tr>
+                  <tr>
+                    <td>{song.artist}</td>
+                    <td>{song.albumName}</td>
+                  </tr>
+                </table>
+              </>
+            );
+          }
+        })}
       </div>
     </div>
   );
