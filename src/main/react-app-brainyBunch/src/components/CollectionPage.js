@@ -11,6 +11,8 @@ const CollectionPage = ({ onAddSong }) => {
   const [selectedCollection, setSelectedCollection] = useState("");
   const [sortType, setSortType] = useState('artist');
   const username = localStorage.getItem("username");
+  const [imageSource, setImageSource] = useState(null);
+
   useEffect(() => {
     console.log(username);
     const userCollection = async () => {
@@ -142,9 +144,32 @@ const CollectionPage = ({ onAddSong }) => {
       )
     );
   };
+
+  const loadProfileImage = async () => {
+    const username = localStorage.getItem("username");
+    const response = await fetch(
+      `http://localhost:8080/profileImage/${username}`
+    );
+    if (!response.ok) {
+      setImageSource(null);
+    } else {
+      console.log(response);
+      const imageBlob = await response.blob();
+      const imageObjectURL = URL.createObjectURL(imageBlob);
+      setImageSource(imageObjectURL);
+    }
+  };
+
+  useEffect(() => {
+    loadProfileImage();
+  }, []);
+
   return (
     <div>
       <Navigation />
+      <br></br>
+      <br></br>
+      <br></br>
       <h1>Your Collections</h1>
       <input
         type="text"
@@ -170,11 +195,15 @@ const CollectionPage = ({ onAddSong }) => {
         ))}
       </ul>
       <h2>User Collections</h2>
+      <button onClick={() => handleSortTypeChange('artist')}>Sort by Artist</button>
+      <button onClick={() => handleSortTypeChange('album')}>Sort by Album</button>
+      <br></br>
       {userCollection &&
         userCollection.map((collection) => {
           return (
             <div className="card">
-              <img src="userCollection.avif" alt="User" className="img"></img>
+              {/* <img src="userCollection.avif" alt="User" className="img"></img> */}
+              <img src={imageSource} alt="User" className="img"></img>
               <div className="container">
                 <button
                   onClick={() => {
@@ -232,8 +261,7 @@ const CollectionPage = ({ onAddSong }) => {
         </div>
       </div>
       <div className="songs">
-          <button onClick={() => handleSortTypeChange('artist')}>Sort by Artist</button>
-          <button onClick={() => handleSortTypeChange('album')}>Sort by Album</button>
+
         {userSongs.map((song) => {
           if (song.collectionName === selectedCollection) {
             return (
