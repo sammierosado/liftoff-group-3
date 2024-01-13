@@ -75,11 +75,12 @@ function RandomMusicPage() {
     const requestBody = {
       albumName: selectedAlbum.name,
       artist: selectedAlbum.artists[0].name,
-  // const handleAddToLikedSongs = async (selectedAlbum) => {
-  //   const requestBody = {
-  //     //username: username,
-  //     albumName: selectedAlbum.name,
-  //     artist: selectedAlbum.artists[0].name,
+      username: username,
+      // const handleAddToLikedSongs = async (selectedAlbum) => {
+      //   const requestBody = {
+      //     //username: username,
+      //     albumName: selectedAlbum.name,
+      //     artist: selectedAlbum.artists[0].name,
       // collectionName: selectedCollection || collectionValues[0].collectionName,
     };
     const response = await fetch("http://localhost:8080/api/liked-songs", {
@@ -87,7 +88,7 @@ function RandomMusicPage() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(requestBody),
     });
-      }
+  };
 
   //set selected value in dropdown change
   const handleCollectionChange = (e) => {
@@ -152,7 +153,7 @@ function RandomMusicPage() {
                 </h4>
                 <p>{album.artists[0].name}</p>
                 <button onClick={() => handleAddToLikedSongs(album)}>
-                   {album.liked ? "Unlike" : "Like"}
+                  {album.liked ? "Unlike" : "Like"}
                 </button>
 
                 {/* <button onClick={() => handleAddToLikedSongs (i)}>
