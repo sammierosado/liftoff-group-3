@@ -19,6 +19,11 @@ public class SongController {
         this.collectionRepository = collectionRepository;
     }
 
+    @GetMapping
+    public List<Collection> getSongs() {
+        return collectionRepository.findAll();
+    }
+
     @PostMapping
     public void saveSong(@RequestBody Collection collection) {
         collectionRepository.save(collection);
