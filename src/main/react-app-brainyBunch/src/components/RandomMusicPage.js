@@ -71,44 +71,23 @@ function RandomMusicPage() {
       );
   }
 
-  const handleLike = async (index) => {
-    const updatedAlbums = [...albums];
-    const likedAlbum = updatedAlbums[index];
-    likedAlbum.liked = !likedAlbum.liked;
-    setAlbums(updatedAlbums);
-
-    if (likedAlbum.liked) {
-      setLikedAlbums((prevLikedAlbums) => [...prevLikedAlbums, likedAlbum]);
-
-      // Pull the song title and artist information if tracks is defined
-      if (likedAlbum.tracks) {
-        const { id, name, tracks } = likedAlbum;
-        const likedSongs = tracks.map((track) => ({
-          albumId: id,
-          albumName: name,
-          artistName: track.artists[0].name,
-          songTitle: track.name,
-        }));
-
-        // Send a request to the backend to save the liked songs
-        await fetch("http://localhost:8080/api/liked-songs", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(likedSongs),
-        });
-      }
-
-          // Create timestamp for liking the song
-    await createTimestampWithDescription(
-      `Liked album: ${likedAlbum.name}`,
-      username
-    );
-
-    } else {
-      // Can add unlike if wanted later
-    }
+  const handleAddToLikedSongs = async (selectedAlbum) => {
+    const requestBody = {
+      albumName: selectedAlbum.name,
+      artist: selectedAlbum.artists[0].name,
+      username: username,
+      // const handleAddToLikedSongs = async (selectedAlbum) => {
+      //   const requestBody = {
+      //     //username: username,
+      //     albumName: selectedAlbum.name,
+      //     artist: selectedAlbum.artists[0].name,
+      // collectionName: selectedCollection || collectionValues[0].collectionName,
+    };
+    const response = await fetch("http://localhost:8080/api/liked-songs", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(requestBody),
+    });
   };
 
   //set selected value in dropdown change
@@ -129,44 +108,10 @@ function RandomMusicPage() {
       body: JSON.stringify(requestBody),
     });
 
-    // Create timestamp for adding to collection
-    await createTimestampWithDescription(
-      `Added ${selectedAlbum.name} to album collection.`,
-      username
-    );
-
     // Add the selected album to the user's collection
     console.log("Added to collection:", selectedAlbum);
     // Clear the selected album
     setSelectedAlbum(null);
-  };
-
-  const createTimestampWithDescription = async (description, retUser) => {
-    try {
-      const response = await fetch("http://localhost:8080/stamps/save", {
-        method: "POST",
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          actionDescription: description, // Include the description
-          retUser: retUser, // Include retUser in the request body
-          // Add other properties as needed
-        })
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to create timestamp');
-      }
-
-      const successMessage = await response.text();
-      console.log(successMessage);
-
-      //fetchStamps(); // Refresh the list after successful creation
-    } catch (error) {
-      console.error('Error creating timestamp:', error);
-      // Handle the error appropriately, e.g., display an error message to the user
-    }
   };
 
   return (
@@ -207,9 +152,13 @@ function RandomMusicPage() {
                   <b>{album.name}</b>
                 </h4>
                 <p>{album.artists[0].name}</p>
-                <button onClick={() => handleLike(i)}>
+                <button onClick={() => handleAddToLikedSongs(album)}>
                   {album.liked ? "Unlike" : "Like"}
                 </button>
+
+                {/* <button onClick={() => handleAddToLikedSongs (i)}>
+                  {album.liked ? "Unlike" : "Like"}
+                </button> */}
                 <form>
                   <label for="userCollections">Choose a collection:</label>
 
@@ -252,7 +201,7 @@ function RandomMusicPage() {
                     <b>{album.name}</b>
                   </h4>
                   <p>{album.artists[0].name}</p>
-                  <button onClick={() => handleLike(i)}>
+                  <button onClick={() => handleAddToLikedSongs(i)}>
                     {album.liked ? "Unlike" : "Like"}
                   </button>
                   <form>

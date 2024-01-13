@@ -17,7 +17,10 @@ public class LikedSongs {
     private String albumName;
 
     @NotBlank
-    private String artistName;
+    private String artist;
+
+    @NotBlank
+    private String username;
 
     public LikedSongs() {
     }
@@ -38,11 +41,28 @@ public class LikedSongs {
         this.albumName = albumName;
     }
 
-    public String getArtistName() {
-        return artistName;
+    public String getArtist() {
+        return artist;
     }
 
-    public void setArtistName(String artistName) {
-        this.artistName = artistName;
+    public void setArtist(String artist) {
+        this.artist = artist;
     }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public LikedSongs(Long id, String albumName, String artist, String username) {
+        this.id = id;
+        this.albumName = albumName;
+        this.artist = artist;
+        this.username = username;
+    }
+
+
 }
