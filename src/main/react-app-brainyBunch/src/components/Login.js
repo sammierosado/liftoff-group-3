@@ -36,6 +36,7 @@ function Login() {
       console.log(data.errorMessage);
       if (response.ok) {
         localStorage.setItem("username", username);
+        await createTimestampWithDescription(`User ${username} logged in`, username); // Call the function directly
         window.location.href = "/user";
       } else {
         setErrorMessage(data.errorMessage);
@@ -43,6 +44,34 @@ function Login() {
     } catch (error) {
       setErrorMessage(error.response.data.message);
       alert(error);
+    }
+  };
+
+  const createTimestampWithDescription = async (description, retUser) => {
+    try {
+      const response = await fetch("http://localhost:8080/stamps/save", {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          actionDescription: description, // Include the description
+          retUser: retUser, // Include retUser in the request body
+          // Add other properties as needed
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to create timestamp');
+      }
+
+      const successMessage = await response.text();
+      console.log(successMessage);
+
+      //fetchStamps(); // Refresh the list after successful creation
+    } catch (error) {
+      console.error('Error creating timestamp:', error);
+      // Handle the error appropriately, e.g., display an error message to the user
     }
   };
 

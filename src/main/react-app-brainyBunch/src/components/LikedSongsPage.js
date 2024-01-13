@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 
 const LikedSongs = () => {
   const [likedSongs, setLikedSongs] = useState([]);
+  const username = localStorage.getItem("username");
 
   useEffect(() => {
     fetchLikedSongs();
@@ -9,12 +10,13 @@ const LikedSongs = () => {
 
   const fetchLikedSongs = async () => {
     try {
-      const response = await fetch('http://localhost:8080/api/liked_songs');
+      const response = await fetch(
+        "http://localhost:8080/api/liked-songs/" + username
+      );
       const data = await response.json();
       setLikedSongs(data);
-
     } catch (error) {
-      console.error('Error fetching liked songs:', error);
+      console.error("Error fetching liked songs:", error);
     }
   };
 
@@ -25,7 +27,7 @@ const LikedSongs = () => {
         {likedSongs.map((song) => (
           <li key={song.id}>
             {/* Display information about the liked song */}
-            {song.name} by {song.artist}
+            {song.albumName} by {song.artist}
           </li>
         ))}
       </ul>

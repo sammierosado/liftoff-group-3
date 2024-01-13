@@ -19,4 +19,14 @@ public class StampForm {
     {
         this.actionDescription = actionDescription;
     }
+
+    private String retUser;
+
+    public String getRetUser() {
+        return retUser;
+    }
+
+    public void setRetUser(String retUser) {
+        this.retUser = retUser;
+    }
 }

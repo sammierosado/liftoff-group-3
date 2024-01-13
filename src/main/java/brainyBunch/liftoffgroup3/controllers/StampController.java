@@ -1,5 +1,7 @@
 package brainyBunch.liftoffgroup3.controllers;
+
 import brainyBunch.liftoffgroup3.model.repository.StampRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -30,13 +32,14 @@ public class StampController {
     }
 
     @PostMapping("/stamps/save")
-    public ResponseEntity<?> saveTimestamp(@RequestBody StampForm form) {
+    public ResponseEntity<?> saveTimestamp(@RequestBody StampForm stampForm, stamp stamp) {
         // Create a new stamp object
         stamp newStamp = new stamp();
 
         // Set necessary properties
         newStamp.setStampTime(LocalDateTime.now());
-        newStamp.setActionDescription(form.getActionDescription()); // Get description from StampForm object
+        newStamp.setActionDescription(stampForm.getActionDescription()); // Get description from StampForm object
+        newStamp.setRetUser(stampForm.getRetUser());
 
         // Optionally, add other properties as needed
         // ...
