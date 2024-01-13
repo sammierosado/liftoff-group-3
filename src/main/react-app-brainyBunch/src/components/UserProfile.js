@@ -17,6 +17,7 @@ function UserProfile() {
 
   const handleFileChange = (e) => {
     setSelectedFile(e.target.files[0]);
+    createTimestampWithDescription("Profile Image Selected", username); // Add timestamp creation
   };
 
   const handleImageUpload = () => {
@@ -30,6 +31,7 @@ function UserProfile() {
         .then((response) => response.text())
         .then((message) => {
           console.log(message);
+          createTimestampWithDescription("Profile Image Updated", username); // Call without await
           window.location.reload(true);
         })
         .catch((error) => console.error("Error:", error));
@@ -103,6 +105,8 @@ function UserProfile() {
     if (response.ok) {
       localStorage.setItem("username", user.username);
       document.location.href = "/user";
+          // Call createTimestampWithDescription only after successful save
+    await createTimestampWithDescription("User Data Updated", username);
     } else {
       setErrorMessage(responseData.errorMessage);
     }
@@ -114,6 +118,7 @@ function UserProfile() {
   };
 
   const cancelEdit = () => {
+    createTimestampWithDescription("Updates cancelled by User", username); // Add timestamp creation
     window.location.href = "/user";
   };
 
@@ -121,6 +126,34 @@ function UserProfile() {
     let updatedUser = { ...user };
     updatedUser[field] = value;
     setUser(updatedUser);
+  };
+
+  const createTimestampWithDescription = async (description, retUser) => {
+    try {
+      const response = await fetch("http://localhost:8080/stamps/save", {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          actionDescription: description, // Include the description
+          retUser: retUser, // Include retUser in the request body
+          // Add other properties as needed
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to create timestamp');
+      }
+
+      const successMessage = await response.text();
+      console.log(successMessage);
+
+      //fetchStamps(); // Refresh the list after successful creation
+    } catch (error) {
+      console.error('Error creating timestamp:', error);
+      // Handle the error appropriately, e.g., display an error message to the user
+    }
   };
 
   return (

@@ -16,9 +16,15 @@ public class stamp {
     private LocalDateTime stampTime;
     private String actionDescription;
 
+    private String retUser;
+
+    public stamp(){};
+
     // Default constructor, initializing the timestamp with the current date and time.
-    public stamp() {
-        this.stampTime = LocalDateTime.now();
+    public stamp(LocalDateTime stampTime, String actionDescription, String retUser) {
+        this.stampTime = stampTime;
+        this.actionDescription = actionDescription;
+        this.retUser = retUser;
     }
 
     //Sets the timestamp value associated with this stamp.
@@ -35,6 +41,10 @@ public class stamp {
     public void setActionDescription(String actionDescription) {
         this.actionDescription = actionDescription;
     }
+
+    public String getRetUser(){ return retUser; }
+
+    public void setRetUser(String retUser){this.retUser = retUser; }
 
     // Updates the timestamp with the current date and time, typically used to mark actions or events.
     public void recordAction() { // Captures the current date and time and stores it in the actionTime` attribute.

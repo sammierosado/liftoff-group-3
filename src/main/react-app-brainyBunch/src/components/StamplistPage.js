@@ -6,7 +6,18 @@ function StamplistPage() {
   const [stamps, setStamps] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [retUser, setRetUser] = useState(''); // Add state variable for retUser
+  const filteredStamps = stamps.filter(stamp => stamp.retUser === retUser);
 
+  useEffect(() => {
+    const storedUsername = localStorage.getItem('username');
+    setRetUser(storedUsername);
+  }, []);
+
+  useEffect(() => {
+    fetchStamps();
+  }, [retUser]);
+  
   const fetchStamps = async () => {
     try {
       const response = await fetch("http://localhost:8080/all");
@@ -14,8 +25,10 @@ function StamplistPage() {
         throw new Error('Failed to fetch stamps');
       }
 
-      const data = await response.json();
-      setStamps(data);
+      const responseData = await response.json();
+      const filteredStamps = responseData.filter(stamp => stamp.retUser === retUser);
+      setStamps(filteredStamps);
+
     } catch (error) {
       setError(error.message);
     } finally {
@@ -23,7 +36,7 @@ function StamplistPage() {
     }
   };
 
-  const createTimestampWithDescription = async (description) => {
+  const createTimestampWithDescription = async (description, retUser) => {
     try {
       const response = await fetch("http://localhost:8080/stamps/save", {
         method: "POST",
@@ -32,6 +45,7 @@ function StamplistPage() {
         },
         body: JSON.stringify({
           actionDescription: description, // Include the description
+          retUser: retUser, // Include retUser in the request body
           // Add other properties as needed
         })
       });
@@ -61,8 +75,8 @@ function StamplistPage() {
       <br></br>
       <br></br>
       <h1>Stamp List</h1>
-      <button onClick={() => createTimestampWithDescription("Action 1")}>Action 1</button>
-      <button onClick={() => createTimestampWithDescription("Action 2")}>Action 2</button>
+      {/* <button onClick={() => createTimestampWithDescription("Action 1",retUser)}>Action 1</button>
+      <button onClick={() => createTimestampWithDescription("Action 2",retUser)}>Action 2</button> */}
       {/* Add more buttons for other actions as needed */}
       {error && <div className="error">{error}</div>}
       {isLoading ? (
@@ -77,8 +91,8 @@ function StamplistPage() {
             </tr>
           </thead>
           <tbody>
-            {stamps.length > 0 ? (
-              stamps.map(stamp => (
+          {filteredStamps.length > 0 ? (
+              filteredStamps.map(stamp => (
                 <tr key={stamp.id}>
                   <td>{stamp.id}</td>
                   <td>{stamp.stampTime}</td>

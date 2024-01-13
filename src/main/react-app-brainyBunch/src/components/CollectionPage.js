@@ -58,6 +58,9 @@ const CollectionPage = ({ onAddSong }) => {
     console.log(resdata.errorMessage);
     if (response.ok) {
       setUserCollection(resdata);
+
+    // Create timestamp after successful collection creation
+    createTimestampWithDescription("Created collection: " + collectionName,username);
     }
   };
 
@@ -83,6 +86,34 @@ const CollectionPage = ({ onAddSong }) => {
           : collection
       )
     );
+  };
+
+  const createTimestampWithDescription = async (description, retUser) => {
+    try {
+      const response = await fetch("http://localhost:8080/stamps/save", {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          actionDescription: description, // Include the description
+          retUser: retUser, // Include retUser in the request body
+          // Add other properties as needed
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to create timestamp');
+      }
+
+      const successMessage = await response.text();
+      console.log(successMessage);
+
+      //fetchStamps(); // Refresh the list after successful creation
+    } catch (error) {
+      console.error('Error creating timestamp:', error);
+      // Handle the error appropriately, e.g., display an error message to the user
+    }
   };
 
   return (
