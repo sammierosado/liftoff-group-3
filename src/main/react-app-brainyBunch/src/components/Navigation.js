@@ -31,6 +31,11 @@ const Navigation = () => {
           )}
           {isLoggedIn && (
             <li>
+              <a href="/likedsongs">Liked Songs</a>
+            </li>
+          )}
+          {isLoggedIn && (
+            <li>
               <a href="/user">Profile</a>
             </li>
           )}
