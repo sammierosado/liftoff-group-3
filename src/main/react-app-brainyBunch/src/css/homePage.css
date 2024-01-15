@@ -7,3 +7,10 @@
 .homePage .nav .nav_routes {
   margin-right: 2rem;
 }
+
+.centered {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Adjust as needed to center vertically within the viewport */
+}
