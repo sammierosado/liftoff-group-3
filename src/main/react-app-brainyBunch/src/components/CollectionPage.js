@@ -9,7 +9,7 @@ const CollectionPage = ({ onAddSong }) => {
   const [userSongs, setUserSongs] = useState([]);
   // const [sortEnabled, setSortEnabled] = useState(false);
   const [selectedCollection, setSelectedCollection] = useState("");
-  const [sortType, setSortType] = useState('artist');
+  const [sortType, setSortType] = useState("artist");
   const username = localStorage.getItem("username");
   const [imageSource, setImageSource] = useState(null);
 
@@ -40,34 +40,34 @@ const CollectionPage = ({ onAddSong }) => {
     getSongs();
   }, []);
   const sortSongsByArtist = () => {
-    const sortedSongs = userSongs
-      .slice()
-      .sort((a, b) => {
-        const artistA = (a.artist || "").toLowerCase();
-        const artistB = (b.artist || "").toLowerCase();
-        const albumNameA = (a.albumName || "").toLowerCase();
-        const albumNameB = (b.albumName || "").toLowerCase();
-        return artistA.localeCompare(artistB) || albumNameA.localeCompare(albumNameB);
-      });
+    const sortedSongs = userSongs.slice().sort((a, b) => {
+      const artistA = (a.artist || "").toLowerCase();
+      const artistB = (b.artist || "").toLowerCase();
+      const albumNameA = (a.albumName || "").toLowerCase();
+      const albumNameB = (b.albumName || "").toLowerCase();
+      return (
+        artistA.localeCompare(artistB) || albumNameA.localeCompare(albumNameB)
+      );
+    });
     setUserSongs(sortedSongs);
   };
   const sortSongsByAlbum = () => {
-    const sortedSongs = userSongs
-      .slice()
-      .sort((a, b) => {
-        const artistA = (a.artist || "").toLowerCase();
-        const artistB = (b.artist || "").toLowerCase();
-        const albumNameA = (a.albumName || "").toLowerCase();
-        const albumNameB = (b.albumName || "").toLowerCase();
-        return albumNameA.localeCompare(albumNameB) || artistA.localeCompare(artistB);
-      });
+    const sortedSongs = userSongs.slice().sort((a, b) => {
+      const artistA = (a.artist || "").toLowerCase();
+      const artistB = (b.artist || "").toLowerCase();
+      const albumNameA = (a.albumName || "").toLowerCase();
+      const albumNameB = (b.albumName || "").toLowerCase();
+      return (
+        albumNameA.localeCompare(albumNameB) || artistA.localeCompare(artistB)
+      );
+    });
     setUserSongs(sortedSongs);
   };
   const handleSortTypeChange = (newSortType) => {
     setSortType(newSortType);
-    if (newSortType === 'artist') {
+    if (newSortType === "artist") {
       sortSongsByArtist();
-    } else if (newSortType === 'album') {
+    } else if (newSortType === "album") {
       sortSongsByAlbum();
     }
   };
@@ -94,8 +94,11 @@ const CollectionPage = ({ onAddSong }) => {
     console.log(resdata.errorMessage);
     if (response.ok) {
       setUserCollection(resdata);
-    // Create timestamp after successful collection creation
-    createTimestampWithDescription("Created collection: " + collectionName,username);
+      // Create timestamp after successful collection creation
+      createTimestampWithDescription(
+        "Created collection: " + collectionName,
+        username
+      );
     }
   };
   const createTimestampWithDescription = async (description, retUser) => {
@@ -103,35 +106,35 @@ const CollectionPage = ({ onAddSong }) => {
       const response = await fetch("http://localhost:8080/stamps/save", {
         method: "POST",
         headers: {
-          'Content-Type': 'application/json'
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           actionDescription: description, // Include the description
           retUser: retUser, // Include retUser in the request body
           // Add other properties as needed
-        })
+        }),
       });
       if (!response.ok) {
-        throw new Error('Failed to create timestamp');
+        throw new Error("Failed to create timestamp");
       }
       const successMessage = await response.text();
       console.log(successMessage);
       //fetchStamps(); // Refresh the list after successful creation
     } catch (error) {
-      console.error('Error creating timestamp:', error);
+      console.error("Error creating timestamp:", error);
       // Handle the error appropriately, e.g., display an error message to the user
     }
   };
   const createCollection = () => {
-        if (newCollectionName.trim() !== "") {
-          setCollections([
-            ...collections,
-            { id: Date.now(), name: newCollectionName, songs: [] },
-          ]);
-          setNewCollectionName("");
-          saveCollection(newCollectionName.trim());
-        }
-      };
+    if (newCollectionName.trim() !== "") {
+      setCollections([
+        ...collections,
+        { id: Date.now(), name: newCollectionName, songs: [] },
+      ]);
+      setNewCollectionName("");
+      saveCollection(newCollectionName.trim());
+    }
+  };
   const addSongToCollection = (collectionId, song) => {
     setCollections((prevCollections) =>
       prevCollections.map((collection) =>
@@ -195,8 +198,12 @@ const CollectionPage = ({ onAddSong }) => {
         ))}
       </ul>
       <h2>User Collections</h2>
-      <button onClick={() => handleSortTypeChange('artist')}>Sort by Artist</button>
-      <button onClick={() => handleSortTypeChange('album')}>Sort by Album</button>
+      <button onClick={() => handleSortTypeChange("artist")}>
+        Sort by Artist
+      </button>
+      <button onClick={() => handleSortTypeChange("album")}>
+        Sort by Album
+      </button>
       <br></br>
       {userCollection &&
         userCollection.map((collection) => {
@@ -261,7 +268,6 @@ const CollectionPage = ({ onAddSong }) => {
         </div>
       </div>
       <div className="songs">
-
         {userSongs.map((song) => {
           if (song.collectionName === selectedCollection) {
             return (
@@ -270,10 +276,14 @@ const CollectionPage = ({ onAddSong }) => {
                   <tr>
                     <th>Artist</th>
                     <th>Song</th>
+                    <th>Delete</th>
                   </tr>
                   <tr>
                     <td>{song.artist}</td>
                     <td>{song.albumName}</td>
+                    <td>
+                      <button>Delete Me!</button>
+                    </td>
                   </tr>
                 </table>
               </>
