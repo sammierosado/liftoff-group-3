@@ -169,7 +169,7 @@ function RandomMusicPage() {
       </form>
       <div>
         <button className="RandomButton" type="button" onClick={search}>
-          Search for popular new albums!
+          Search for popular new tracks!
         </button>
       </div>
       {styleSelected === "column" ? (
