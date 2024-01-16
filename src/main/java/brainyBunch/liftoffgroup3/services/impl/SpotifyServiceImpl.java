@@ -48,7 +48,7 @@ public class SpotifyServiceImpl  implements SpotifyService {
 
         try {
             responseEntity = restTemplate.exchange(formattedSearchUrl, HttpMethod.GET, new HttpEntity<>(headers), String.class);
-            System.out.println("Search Response Entity: "+ responseEntity);
+            //System.out.println("Search Response Entity: "+ responseEntity);
         } catch(RestClientException e) {
             System.out.println("Exception occurred while calling search URL: "+e.getMessage());
             throw new SpotifyException("Exception occurred while calling search URL", HttpStatus.INTERNAL_SERVER_ERROR);
