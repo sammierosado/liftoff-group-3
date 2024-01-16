@@ -108,11 +108,11 @@ function RandomMusicPage() {
       body: JSON.stringify(requestBody),
     });
 
-        // Create timestamp for adding to collection
-        await createTimestampWithDescription(
-          `Added ${selectedAlbum.name} to album collection.`,
-          username
-        );
+    // Create timestamp for adding to collection
+    await createTimestampWithDescription(
+      `Added ${selectedAlbum.name} to album collection.`,
+      username
+    );
 
     // Add the selected album to the user's collection
     console.log("Added to collection:", selectedAlbum);
@@ -125,17 +125,17 @@ function RandomMusicPage() {
       const response = await fetch("http://localhost:8080/stamps/save", {
         method: "POST",
         headers: {
-          'Content-Type': 'application/json'
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           actionDescription: description, // Include the description
           retUser: retUser, // Include retUser in the request body
           // Add other properties as needed
-        })
+        }),
       });
 
       if (!response.ok) {
-        throw new Error('Failed to create timestamp');
+        throw new Error("Failed to create timestamp");
       }
 
       const successMessage = await response.text();
@@ -143,7 +143,7 @@ function RandomMusicPage() {
 
       //fetchStamps(); // Refresh the list after successful creation
     } catch (error) {
-      console.error('Error creating timestamp:', error);
+      console.error("Error creating timestamp:", error);
       // Handle the error appropriately, e.g., display an error message to the user
     }
   };
@@ -235,7 +235,7 @@ function RandomMusicPage() {
                     <b>{album.name}</b>
                   </h4>
                   <p>{album.artists[0].name}</p>
-                  <button onClick={() => handleAddToLikedSongs(i)}>
+                  <button onClick={() => handleAddToLikedSongs(album)}>
                     {album.liked ? "Unlike" : "Like"}
                   </button>
                   <form>
