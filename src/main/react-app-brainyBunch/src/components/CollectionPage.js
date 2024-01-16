@@ -218,7 +218,7 @@ const CollectionPage = ({ onAddSong }) => {
         Sort by Artist
       </button>
       <button onClick={() => handleSortTypeChange("album")}>
-        Sort by Album
+        Sort by Song
       </button>
       <br></br>
       {userCollection &&
@@ -313,3 +313,4 @@ const CollectionPage = ({ onAddSong }) => {
   );
 };
 export default CollectionPage;
+
