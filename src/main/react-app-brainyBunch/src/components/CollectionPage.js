@@ -147,6 +147,22 @@ const CollectionPage = ({ onAddSong }) => {
       )
     );
   };
+  // handle song delete
+  const handleSongDelete = async (id) => {
+    console.log(id, "delete song");
+    const response = await fetch(
+      `http://localhost:8080/api/song/delete/${id}`,
+      {
+        method: "Delete",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    if (response.ok) {
+      window.location.reload(true);
+    }
+  };
 
   const loadProfileImage = async () => {
     const username = localStorage.getItem("username");
@@ -282,7 +298,9 @@ const CollectionPage = ({ onAddSong }) => {
                     <td>{song.artist}</td>
                     <td>{song.albumName}</td>
                     <td>
-                      <button>Delete Me!</button>
+                      <button onClick={() => handleSongDelete(song.id)}>
+                        Delete Me!
+                      </button>
                     </td>
                   </tr>
                 </table>
