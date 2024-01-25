@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import LikedSongsPage from "./LikedSongsPage";
 import CollectionPage from "./CollectionPage";
-import Navigation from "./Navigation";
+
 import "../css/randomPage.css";
 
 import "../css/gridLayout.css";
@@ -151,22 +151,21 @@ function RandomMusicPage() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-  
+
     const commentText = event.target.elements.commentText.value;
     const albumName = selectedAlbum; // adjust based on where album name is stored
-  
+
     if (commentText.trim() === "") {
       // Display an error message if the comment is empty
       alert("Please enter a comment before submitting.");
       return; // Prevent further execution of the function
     }
-  
+
     const commentObject = {
       commentText,
       albumName,
     };
-  
-  
+
     fetch("http://localhost:8080/api/comments", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -176,10 +175,10 @@ function RandomMusicPage() {
       .then((data) => {
         // Update comments state to reflect the new comment
         setComments((prevComments) => [...prevComments, data]);
-  
+
         // Clear the comment form
         event.target.elements.commentText.value = "";
-  
+
         // Display a success message (optional)
         console.log("Comment created successfully!", data);
       })
@@ -192,7 +191,7 @@ function RandomMusicPage() {
   useEffect(() => {
     fetchComments();
   }, []);
-  
+
   const fetchComments = async () => {
     try {
       const response = await fetch("http://localhost:8080/api/comments"); // Adjust the endpoint if needed
@@ -210,11 +209,11 @@ function RandomMusicPage() {
       const response = await fetch("http://localhost:8080/api/comments", {
         method: "DELETE",
       });
-  
+
       if (response.ok) {
         // Clear the comments array to remove all comments from the UI:
         setComments([]);
-  
+
         console.log("All comments deleted successfully!");
       } else {
         console.error("Error deleting comments:", response.statusText);
@@ -228,16 +227,19 @@ function RandomMusicPage() {
     try {
       // Retrieve the ID of the comment at the first index:
       const commentId = comments.id[0];
-  
+
       // Send a DELETE request to the API endpoint to delete the specific comment:
-      const response = await fetch(`http://localhost:8080/api/comments/${commentId}`, {
-        method: "DELETE",
-      });
-  
+      const response = await fetch(
+        `http://localhost:8080/api/comments/${commentId}`,
+        {
+          method: "DELETE",
+        }
+      );
+
       if (response.ok) {
         // Remove the comment from the state:
-        setComments(prevComments => prevComments.slice(1));
-  
+        setComments((prevComments) => prevComments.slice(1));
+
         console.log("Comment deleted successfully!");
       } else {
         console.error("Error deleting comment:", response.statusText);
@@ -249,7 +251,6 @@ function RandomMusicPage() {
 
   return (
     <div className="RandomMusicPage">
-      <Navigation />
       <br />
       <br />
       <br />
@@ -316,27 +317,28 @@ function RandomMusicPage() {
                   />
                 </form>
                 <br></br>
-                <form id="commentForm"onSubmit={handleSubmit}>
-                <label for="commentText"></label>
-                <textarea id="commentText" name="commentText"></textarea>
-                <br></br>
-                <button type="submit">Submit Review</button>
+                <form id="commentForm" onSubmit={handleSubmit}>
+                  <label for="commentText"></label>
+                  <textarea id="commentText" name="commentText"></textarea>
+                  <br></br>
+                  <button type="submit">Submit Review</button>
                 </form>
                 <button onClick={handleDeleteAll}>Delete All Reviews</button>
-  <table className="comments-table"style={{ border: "none", color:"black"}}>
-    <thead>
-      <tr>
-        {/* <th></th> */}
-      </tr>
-    </thead>
-    <tbody>
-      {comments.map((comment) => (
-        <tr key={comment.id}>
-          <td>{comment.commentText}</td>
-        </tr>
-      ))}
-    </tbody>
-  </table>
+                <table
+                  className="comments-table"
+                  style={{ border: "none", color: "black" }}
+                >
+                  <thead>
+                    <tr>{/* <th></th> */}</tr>
+                  </thead>
+                  <tbody>
+                    {comments.map((comment) => (
+                      <tr key={comment.id}>
+                        <td>{comment.commentText}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
               </div>
             </div>
           ))}

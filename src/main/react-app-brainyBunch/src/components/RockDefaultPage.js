@@ -41,7 +41,6 @@ function RockDefaultPage() {
 
   return (
     <div className="RandomMusicPage">
-      <Navigation />
       <br />
       <br />
       <br />

@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import "../css/loginPage.css";
-import { json } from "react-router";
-import Navigation from "./Navigation";
 
 function Login() {
   const [username, setUsername] = useState(null);
@@ -36,7 +34,10 @@ function Login() {
       console.log(data.errorMessage);
       if (response.ok) {
         localStorage.setItem("username", username);
-        await createTimestampWithDescription(`User ${username} logged in`, username); // Call the function directly
+        await createTimestampWithDescription(
+          `User ${username} logged in`,
+          username
+        ); // Call the function directly
         window.location.href = "/user";
       } else {
         setErrorMessage(data.errorMessage);
@@ -52,17 +53,17 @@ function Login() {
       const response = await fetch("http://localhost:8080/stamps/save", {
         method: "POST",
         headers: {
-          'Content-Type': 'application/json'
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           actionDescription: description, // Include the description
           retUser: retUser, // Include retUser in the request body
           // Add other properties as needed
-        })
+        }),
       });
 
       if (!response.ok) {
-        throw new Error('Failed to create timestamp');
+        throw new Error("Failed to create timestamp");
       }
 
       const successMessage = await response.text();
@@ -70,7 +71,7 @@ function Login() {
 
       //fetchStamps(); // Refresh the list after successful creation
     } catch (error) {
-      console.error('Error creating timestamp:', error);
+      console.error("Error creating timestamp:", error);
       // Handle the error appropriately, e.g., display an error message to the user
     }
   };
@@ -78,7 +79,6 @@ function Login() {
   return (
     <div className="login">
       <div className="login-form">
-        <Navigation />
         <div className="user-form">
           <h1>User Login</h1>
           {errorMessage && <p className="error">{errorMessage}</p>}

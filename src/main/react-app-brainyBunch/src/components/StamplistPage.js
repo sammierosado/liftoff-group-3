@@ -1,34 +1,35 @@
-import React, { useState, useEffect } from 'react';
-import Navigation from "./Navigation";
+import React, { useState, useEffect } from "react";
+
 import "../css/stamppage.css";
 
 function StamplistPage() {
   const [stamps, setStamps] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [retUser, setRetUser] = useState(''); // Add state variable for retUser
-  const filteredStamps = stamps.filter(stamp => stamp.retUser === retUser);
+  const [retUser, setRetUser] = useState(""); // Add state variable for retUser
+  const filteredStamps = stamps.filter((stamp) => stamp.retUser === retUser);
 
   useEffect(() => {
-    const storedUsername = localStorage.getItem('username');
+    const storedUsername = localStorage.getItem("username");
     setRetUser(storedUsername);
   }, []);
 
   useEffect(() => {
     fetchStamps();
   }, [retUser]);
-  
+
   const fetchStamps = async () => {
     try {
       const response = await fetch("http://localhost:8080/all");
       if (!response.ok) {
-        throw new Error('Failed to fetch stamps');
+        throw new Error("Failed to fetch stamps");
       }
 
       const responseData = await response.json();
-      const filteredStamps = responseData.filter(stamp => stamp.retUser === retUser);
+      const filteredStamps = responseData.filter(
+        (stamp) => stamp.retUser === retUser
+      );
       setStamps(filteredStamps);
-
     } catch (error) {
       setError(error.message);
     } finally {
@@ -41,26 +42,24 @@ function StamplistPage() {
       const response = await fetch("http://localhost:8080/stamps/save", {
         method: "POST",
         headers: {
-          'Content-Type': 'application/json'
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          actionDescription: description, 
-          retUser: retUser, 
-          
-        })
+          actionDescription: description,
+          retUser: retUser,
+        }),
       });
 
       if (!response.ok) {
-        throw new Error('Failed to create timestamp');
+        throw new Error("Failed to create timestamp");
       }
 
       const successMessage = await response.text();
       console.log(successMessage);
 
-      fetchStamps(); 
+      fetchStamps();
     } catch (error) {
-      console.error('Error creating timestamp:', error);
-      
+      console.error("Error creating timestamp:", error);
     }
   };
 
@@ -70,7 +69,6 @@ function StamplistPage() {
 
   return (
     <div>
-      <Navigation />
       <br></br>
       <br></br>
       <br></br>
@@ -91,8 +89,8 @@ function StamplistPage() {
             </tr>
           </thead>
           <tbody>
-          {filteredStamps.length > 0 ? (
-              filteredStamps.map(stamp => (
+            {filteredStamps.length > 0 ? (
+              filteredStamps.map((stamp) => (
                 <tr key={stamp.id}>
                   <td>{stamp.id}</td>
                   <td>{stamp.stampTime}</td>
@@ -107,7 +105,6 @@ function StamplistPage() {
           </tbody>
         </table>
       )}
-
     </div>
   );
 }

@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import Navigation from "../Navigation";
 
 import "../../css/searchPage.css";
 import Artist from "./Artist";
@@ -18,6 +17,8 @@ const Search = () => {
   const [albumsData, setAlbumsData] = useState([]);
   const [artistsData, setArtistsData] = useState([]);
   const [tracksData, setTracksData] = useState([]);
+  const [collectionValues, setCollectionValues] = useState([]);
+  const [selectedCollection, setSelectedCollection] = useState("");
 
   const searchTypeJson = {
     "": "Select Type",
@@ -25,7 +26,7 @@ const Search = () => {
     artist: "Artist",
     track: "Track",
   };
-
+  const username = localStorage.getItem("username");
   const searchTypeOptions = Object.keys(searchTypeJson).map((key) => {
     return (
       <option key={key} value={searchTypeJson[key]}>
@@ -88,11 +89,44 @@ const Search = () => {
     setFormIsValid(false);
   };
 
+  useEffect(() => {
+    const collectionValues = async () => {
+      const response = await fetch(
+        "http://localhost:8080/collections/" + username,
+        {
+          method: "get",
+          headers: { "Content-Type": "application/json" },
+        }
+      );
+
+      const collectionData = await response.json();
+      setCollectionValues(collectionData);
+      console.log(collectionData);
+    };
+    collectionValues();
+  }, []);
+
+  const handleCollectionChange = (e) => {
+    setSelectedCollection(e.target.value);
+  };
+
+  const handleAddToCollection = async (selectedAlbum) => {
+    const requestBody = {
+      username: username,
+      albumName: selectedAlbum.name,
+      artist: selectedAlbum.artists[0].name,
+      collectionName: selectedCollection || collectionValues[0].collectionName,
+    };
+    const response = await fetch("http://localhost:8080/api/song", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(requestBody),
+    });
+  };
+
   return (
     <div className="search">
-      <div className="userProfile-nav">
-        <Navigation />
-      </div>
+      <div className="userProfile-nav">{/* <Navigation /> */}</div>
       {errorMessage && <p className="error,errorMessage"></p>}
 
       <form onSubmit={submitHandler}>
@@ -128,9 +162,38 @@ const Search = () => {
       {searchData && (
         <div className="marTop30 search-result">
           <hr />
-          {albums}
-          {artists}
-          {tracks}
+          <div>
+           {albums.map((album) => (
+              //  {albums}
+              // {artists}
+              // {tracks}
+
+              <form key={album.id}>
+              {album}
+                <label htmlFor="addtoCollection">Add to Collection: </label>
+                <select
+                  name="collections"
+                  id="collections"
+                  onChange={handleCollectionChange}
+                >
+                  {collectionValues.length > 0 &&
+                    collectionValues.map((value) => (
+                      <option key={value.id}>{value.collectionName}</option>
+                    ))}
+                  {collectionValues.length === 0 && (
+                    <option>No collection found</option>
+                  )}
+                </select>
+                <br />
+                <input
+                  type="button"
+                  value="Submit"
+                  onClick={() => handleAddToCollection(albums)}
+                />
+              </form>
+            ))}
+          </div>
+          <br></br>
         </div>
       )}
     </div>

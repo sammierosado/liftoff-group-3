@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "../css/collectionBoard.css";
-import Navigation from "./Navigation";
-import { useRoutes } from "react-router-dom";
+
 const CollectionPage = ({ onAddSong }) => {
   const [collections, setCollections] = useState([]);
   const [userCollection, setUserCollection] = useState();
@@ -185,7 +184,6 @@ const CollectionPage = ({ onAddSong }) => {
 
   return (
     <div>
-      <Navigation />
       <br></br>
       <br></br>
       <br></br>
@@ -313,4 +311,3 @@ const CollectionPage = ({ onAddSong }) => {
   );
 };
 export default CollectionPage;
-

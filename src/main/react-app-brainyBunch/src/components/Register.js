@@ -2,8 +2,6 @@ import React, { useState } from "react";
 
 import axios from "axios";
 import "../css/registerPage.css";
-import { json, redirect } from "react-router-dom";
-import Navigation from "./Navigation";
 
 function Register() {
   const [user, setUser] = useState({
@@ -44,7 +42,10 @@ function Register() {
       const data = await response.json();
       console.log(data.errorMessage);
       if (response.ok) {
-        createTimestampWithDescription("Registered", createTimestampWithDescription.retUser); // Call it here
+        createTimestampWithDescription(
+          "Registered",
+          createTimestampWithDescription.retUser
+        ); // Call it here
         document.location.href = "/";
       } else {
         setErrorMessage(data.errorMessage);
@@ -60,17 +61,17 @@ function Register() {
       const response = await fetch("http://localhost:8080/stamps/save", {
         method: "POST",
         headers: {
-          'Content-Type': 'application/json'
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           actionDescription: description, // Include the description
           retUser: retUser, // Include retUser in the request body
           // Add other properties as needed
-        })
+        }),
       });
 
       if (!response.ok) {
-        throw new Error('Failed to create timestamp');
+        throw new Error("Failed to create timestamp");
       }
 
       const successMessage = await response.text();
@@ -78,7 +79,7 @@ function Register() {
 
       //fetchStamps(); // Refresh the list after successful creation
     } catch (error) {
-      console.error('Error creating timestamp:', error);
+      console.error("Error creating timestamp:", error);
       // Handle the error appropriately, e.g., display an error message to the user
     }
   };
@@ -87,7 +88,6 @@ function Register() {
   return (
     <div className="register">
       <div>
-        <Navigation />
         <div className="user-form">
           <h1>User Registration</h1>
           {errorMessage && <p className="error">{errorMessage}</p>}
@@ -138,9 +138,9 @@ function Register() {
               />
             </div>
             <div className="footer">
-            <button onClick={saveUser} type="submit" className="register_btn">
-              Register
-            </button>
+              <button onClick={saveUser} type="submit" className="register_btn">
+                Register
+              </button>
             </div>
           </div>
         </div>

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "../css/userProfile.css";
 import { CgProfile } from "react-icons/cg";
-import Navigation from "./Navigation";
+
 import { MdEdit } from "react-icons/md";
 import { json } from "react-router-dom";
 
@@ -105,8 +105,8 @@ function UserProfile() {
     if (response.ok) {
       localStorage.setItem("username", user.username);
       document.location.href = "/user";
-          // Call createTimestampWithDescription only after successful save
-    await createTimestampWithDescription("User Data Updated", username);
+      // Call createTimestampWithDescription only after successful save
+      await createTimestampWithDescription("User Data Updated", username);
     } else {
       setErrorMessage(responseData.errorMessage);
     }
@@ -133,17 +133,17 @@ function UserProfile() {
       const response = await fetch("http://localhost:8080/stamps/save", {
         method: "POST",
         headers: {
-          'Content-Type': 'application/json'
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           actionDescription: description, // Include the description
           retUser: retUser, // Include retUser in the request body
           // Add other properties as needed
-        })
+        }),
       });
 
       if (!response.ok) {
-        throw new Error('Failed to create timestamp');
+        throw new Error("Failed to create timestamp");
       }
 
       const successMessage = await response.text();
@@ -151,18 +151,14 @@ function UserProfile() {
 
       //fetchStamps(); // Refresh the list after successful creation
     } catch (error) {
-      console.error('Error creating timestamp:', error);
+      console.error("Error creating timestamp:", error);
       // Handle the error appropriately, e.g., display an error message to the user
     }
   };
 
   return (
     <div>
-      <div>
-        <div>
-          <Navigation />
-        </div>
-      </div>
+      <div></div>
       <div className="userProfile-nav">
         <h2>Welcome! {username}</h2>
       </div>

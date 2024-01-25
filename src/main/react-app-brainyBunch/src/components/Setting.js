@@ -37,7 +37,6 @@ const Settings = () => {
 
   return (
     <div className="settings">
-      <Navigation />
       <div className="row">
         <div className="setting-label">
           <h2>Theme:</h2>

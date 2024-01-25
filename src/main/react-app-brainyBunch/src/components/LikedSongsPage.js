@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
-import Navigation from "./Navigation";
 
 const LikedSongsPage = () => {
   const [likedSongs, setLikedSongs] = useState([]);
   const [sortedLikedSongs, setSortedLikedSongs] = useState([]);
-  const [sortType, setSortType] = useState('artist');
+  const [sortType, setSortType] = useState("artist");
   const username = localStorage.getItem("username");
 
   useEffect(() => {
@@ -13,9 +12,9 @@ const LikedSongsPage = () => {
 
   const sortLikedSongs = (newSortType) => {
     let sortedSongs = [...likedSongs];
-    if (newSortType === 'artist') {
+    if (newSortType === "artist") {
       sortedSongs.sort((a, b) => a.artist.localeCompare(b.artist));
-    } else if (newSortType === 'album') {
+    } else if (newSortType === "album") {
       sortedSongs.sort((a, b) => a.albumName.localeCompare(b.albumName));
     }
     setSortedLikedSongs(sortedSongs);
@@ -41,14 +40,13 @@ const LikedSongsPage = () => {
 
   return (
     <div>
-      <Navigation />
       <br />
       <br />
       <br />
       <h1>Liked Songs</h1>
       <div>
-        <button onClick={() => sortLikedSongs('artist')}>Sort by Artist</button>
-        <button onClick={() => sortLikedSongs('album')}>Sort by Song</button>
+        <button onClick={() => sortLikedSongs("artist")}>Sort by Artist</button>
+        <button onClick={() => sortLikedSongs("album")}>Sort by Song</button>
       </div>
       <table>
         <thead>

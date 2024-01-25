@@ -19,6 +19,7 @@ import RockDefaultPage from "./components/RockDefaultPage";
 import JazzDefaultPage from "./components/JazzDefaultPage";
 import RapDefaultPage from "./components/RapDefualtPage";
 import Search from "./components/SearchMusic/Search";
+import Navigation from "./components/Navigation";
 
 function App() {
   const darkMode = localStorage.getItem("spotify-mode");
@@ -36,24 +37,28 @@ function App() {
   return (
     <Router>
       <div>
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/likedsongs" element={<LikedSongsPage />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/logout" element={<Logout />} />
-          <Route path="/user" element={<UserProfile />} />
-          <Route path="/randompage" element={<RandomMusicPage />} />
-          <Route path="/collections" element={<CollectionPage />} />
-          <Route path="/stamplist" element={<StamplistPage />} />
-          <Route path="/setting" element={<Setting />} />
-          <Route path="/imagepage" element={<ImagePage />} />
-          <Route path="/rockpage" element={<RockDefaultPage />} />
-          <Route path="/jazzpage" element={<JazzDefaultPage />} />
-          <Route path="/rappage" element={<RapDefaultPage />} />
-          <Route path="/search" element={<Search />} />
-
-        </Routes>
+        <>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/likedsongs" element={<LikedSongsPage />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/logout" element={<Logout />} />
+            <Route path="/user" element={<UserProfile />} />
+            <Route path="/randompage" element={<RandomMusicPage />} />
+            <Route path="/collections" element={<CollectionPage />} />
+            <Route path="/stamplist" element={<StamplistPage />} />
+            <Route path="/setting" element={<Setting />} />
+            <Route path="/imagepage" element={<ImagePage />} />
+            <Route path="/rockpage" element={<RockDefaultPage />} />
+            <Route path="/jazzpage" element={<JazzDefaultPage />} />
+            <Route path="/rappage" element={<RapDefaultPage />} />
+            <Route path="/search" element={<Search />} />
+          </Routes>
+          <div>
+            <Navigation />
+          </div>
+        </>
       </div>
     </Router>
   );
